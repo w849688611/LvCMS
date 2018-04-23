@@ -21,6 +21,11 @@ use think\Request;
 
 class CategoryBase extends Controller
 {
+    /**添加栏目
+     * @param Request $request
+     * @return \think\response\Json
+     * @throws TokenException
+     */
     public function add(Request $request){
         if(!TokenService::validAdminToken($request->header('token'))){
             throw new TokenException();
@@ -36,6 +41,12 @@ class CategoryBase extends Controller
         $category->allowField(true)->save();
         return ResultService::success('添加栏目成功');
     }
+
+    /**删除栏目
+     * @param Request $request
+     * @return \think\response\Json
+     * @throws TokenException
+     */
     public function delete(Request $request){
         if(!TokenService::validAdminToken($request->header('token'))){
             throw new TokenException();
@@ -44,12 +55,19 @@ class CategoryBase extends Controller
         $id=$request->param('id');
         $category=CategoryModel::where('id','=',$id)->find();
         if($category){
+            $category->delete();
             return ResultService::success('删除成功');
         }
         else{
             return ResultService::failure('栏目不存在');
         }
     }
+
+    /**更新栏目
+     * @param Request $request
+     * @return \think\response\Json
+     * @throws TokenException
+     */
     public function update(Request $request){
         if(!TokenService::validAdminToken($request->header('token'))){
             throw new TokenException();
@@ -74,6 +92,9 @@ class CategoryBase extends Controller
                 $category->more=$request->param('more','','json_decode');
             }
             if($request->has('parent_id')){
+                if($request->param('parent_id')==$category->id){
+                    return ResultService::failure('父级栏目不能为自身');
+                }
                 $category->parent_id=$request->param('parent_id');
             }
             $category->save();
@@ -83,6 +104,12 @@ class CategoryBase extends Controller
             return ResultService::failure('栏目不存在');
         }
     }
+
+    /**根据id获取栏目
+     * @param Request $request
+     * @return \think\response\Json
+     * @throws TokenException
+     */
     public function get(Request $request){
         if(!TokenService::validAdminToken($request->header('token'))){
             throw new TokenException();
@@ -104,6 +131,12 @@ class CategoryBase extends Controller
             return ResultService::makeResult(ResultService::Success,'',$categories->toArray());
         }
     }
+
+    /**获取栏目树
+     * @param Request $request
+     * @return \think\response\Json
+     * @throws TokenException
+     */
     public function getTree(Request $request){
         if(!TokenService::validAdminToken($request->header('token'))){
             throw new TokenException();
@@ -122,6 +155,7 @@ class CategoryBase extends Controller
             return ResultService::makeResult(ResultService::Success,'',CategoryModel::generateCategoryTree($postCategory,$tag,$tagSuccessValue,$tagFailureValue));
         }
         else{
+            //var_dump(CategoryModel::generateCategoryTree(array(),$tag,$tagSuccessValue,$tagFailureValue));
             return ResultService::makeResult(ResultService::Success,'',CategoryModel::generateCategoryTree(array(),$tag,$tagSuccessValue,$tagFailureValue));
         }
     }

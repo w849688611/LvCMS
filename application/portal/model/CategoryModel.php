@@ -16,15 +16,22 @@ class CategoryModel extends Model
     protected $name='category';
     protected $autoWriteTimestamp=true;
 
+    /**生成栏目树
+     * @param $postCategory
+     * @param string $tag
+     * @param string $tagSuccessValue
+     * @param string $tagFailureValue
+     * @return array
+     */
     public static function generateCategoryTree($postCategory,$tag='checked',$tagSuccessValue='1',$tagFailureValue='0'){
         if(is_array($postCategory)){
-            $parentCategory=self::where('parent_id','=','0')->select()->toArray();
+            $parentCategory=self::where('parent_id','=','0')->select()->hidden(['create_time','update_time'])->toArray();
             for($i=0,$len=count($parentCategory);$i<$len;$i++){
                 if(self::isCategoryInPostCategory($postCategory,$parentCategory[$i])){
-                    $parentCategory[$tag]=$tagSuccessValue;
+                    $parentCategory[$i][$tag]=$tagSuccessValue;
                 }
                 else{
-                    $parentCategory[$tag]=$tagFailureValue;
+                    $parentCategory[$i][$tag]=$tagFailureValue;
                 }
                 $parentCategory[$i]['children']=self::generateCategoryChildren($postCategory,$tag,$tagSuccessValue,$tagFailureValue,$parentCategory[$i]['id']);
             }
@@ -32,24 +39,39 @@ class CategoryModel extends Model
         }
         return array();
     }
+
+    /**递归生成栏目子树（其实可以和上一个方法合并成一个方法，但是怕以后看不懂）
+     * @param $postCategory
+     * @param string $tag
+     * @param string $tagSuccessValue
+     * @param string $tagFailureValue
+     * @param $parentId
+     * @return array
+     */
     public static function generateCategoryChildren($postCategory,$tag='checked',$tagSuccessValue='1',$tagFailureValue='0',$parentId){
-        $parentCategory=self::where('parent_id','=',$parentId)->select()->toArray();
+        $parentCategory=self::where('parent_id','=',$parentId)->select()->hidden(['create_time','update_time'])->toArray();
         if(count($parentCategory)==0){
             return array();
         }
         else{
-            for($i=0,$len=count($postCategory);$i<$len;$i++){
+            for($i=0,$len=count($parentCategory);$i<$len;$i++){
                 if(self::isCategoryInPostCategory($postCategory,$parentCategory[$i])){
-                    $parentAuth[$i][$tag]=$tagSuccessValue;
+                    $parentCategory[$i][$tag]=$tagSuccessValue;
                 }
                 else{
-                    $parentAuth[$i][$tag]=$tagFailureValue;
+                    $parentCategory[$i][$tag]=$tagFailureValue;
                 }
-                $parentAuth[$i]['children']=self::generateCategoryChildren($postCategory,$tag,$tagSuccessValue,$tagFailureValue,$parentAuth[$i]['id']);
+                $parentCategory[$i]['children']=self::generateCategoryChildren($postCategory,$tag,$tagSuccessValue,$tagFailureValue,$parentCategory[$i]['id']);
             }
             return $parentCategory;
         }
     }
+
+    /**判断栏目是否为内容所属栏目
+     * @param $postCategory
+     * @param $category
+     * @return bool
+     */
     public static function isCategoryInPostCategory($postCategory,$category){
         for($i=0,$len=count($postCategory);$i<$len;$i++){
             if($category['id']==$postCategory[$i]){
