@@ -17,28 +17,28 @@ class AuthModel extends Model
 
     /**根据用户权限获取用户的权限配置树
      * @param $roleAuth
+     * @param string $tag
+     * @param string $tagSuccessValue
+     * @param string $tagFailureValue
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\ModelNotFoundException
-     * @throws \think\exception\DbException
      */
-    public static function generateAuthTree($roleAuth){
+    public static function generateAuthTree($roleAuth,$tag='checked',$tagSuccessValue='1',$tagFailureValue='0'){
         if(is_array($roleAuth)){
             $parentAuth=self::where('parent_id','=','0')->select()->toArray();
             for($i=0,$len=count($parentAuth);$i<$len;$i++){
                 if(self::isAuthInRoleAuth($roleAuth,$parentAuth[$i])){
-                    $parentAuth[$i]['allow']=1;
+                    $parentAuth[$i][$tag]=$tagSuccessValue;
                 }
                 else{
-                    $parentAuth[$i]['allow']=0;
+                    $parentAuth[$i][$tag]=$tagFailureValue;
                 }
-                $parentAuth[$i]['children']=self::generateAuthChildren($roleAuth,$parentAuth[$i]['id']);
+                $parentAuth[$i]['children']=self::generateAuthChildren($roleAuth,$tag,$tagSuccessValue,$tagFailureValue,$parentAuth[$i]['id']);
             }
             return $parentAuth;
         }
         return array();
     }
-    private static function generateAuthChildren($roleAuth,$parentId){
+    private static function generateAuthChildren($roleAuth,$tag='checked',$tagSuccessValue='1',$tagFailureValue='0',$parentId){
         $parentAuth=self::where('parent_id','=',$parentId)->select()->toArray();
         if(count($parentAuth)==0){
             return array();
@@ -46,12 +46,12 @@ class AuthModel extends Model
         else{
             for($i=0,$len=count($parentAuth);$i<$len;$i++){
                 if(self::isAuthInRoleAuth($roleAuth,$parentAuth[$i])){
-                    $parentAuth[$i]['allow']=1;
+                    $parentAuth[$i][$tag]=$tagSuccessValue;
                 }
                 else{
-                    $parentAuth[$i]['allow']=0;
+                    $parentAuth[$i][$tag]=$tagFailureValue;
                 }
-                $parentAuth[$i]['children']=self::generateAuthChildren($roleAuth,$parentAuth[$i]['id']);
+                $parentAuth[$i]['children']=self::generateAuthChildren($roleAuth,$tag,$tagSuccessValue,$tagFailureValue,$parentAuth[$i]['id']);
             }
             return $parentAuth;
         }

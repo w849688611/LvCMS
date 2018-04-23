@@ -9,7 +9,6 @@
 namespace app\admin\controller;
 
 
-use app\admin\model\AuthModel;
 use app\admin\model\RoleAuthModel;
 use app\admin\model\RoleModel;
 use app\admin\validate\role\RoleAddValidate;
@@ -114,7 +113,7 @@ class RoleBase extends Controller
             }
         }
         else{
-            $roles=RoleModel::all();
+            $roles=RoleModel::select();
             return ResultService::makeResult(ResultService::Success,'',$roles->toArray());
         }
     }

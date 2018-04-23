@@ -25,6 +25,18 @@ class BaseValidate extends Validate
             throw $e;
         }
     }
+
+    /**简单封装一下check 配合抛出异常
+     * @param array $data
+     * @throws ParamException
+     */
+    public function singleCheck($data=[]){
+        $result=$this->batch(true)->check($data);
+        if(!$result){
+            $e=new ParamException(['msg'=>$this->getError()]);
+            throw $e;
+        }
+    }
     public function positiveInt($value){
         if(is_numeric($value)&&is_int(intval($value))&&intval($value)>=0){
             return true;

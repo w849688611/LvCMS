@@ -131,7 +131,7 @@ class AdminBase extends Controller
             }
         }
         else{
-            $admins=AdminModel::all();
+            $admins=AdminModel::select();
             return ResultService::makeResult(ResultService::Success,'',$admins->toArray());
         }
     }

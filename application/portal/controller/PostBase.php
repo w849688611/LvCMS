@@ -6,12 +6,12 @@
  * Time: 16:50
  */
 
-namespace app\admin\controller;
+namespace app\portal\controller;
 
 
 use think\Controller;
 
-class Post extends Controller
+class PostBase extends Controller
 {
 
 }

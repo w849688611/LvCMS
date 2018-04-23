@@ -112,7 +112,7 @@ class AuthBase extends Controller
             }
         }
         else{
-            $auths=AuthModel::all();
+            $auths=AuthModel::select();
             return ResultService::makeResult(ResultService::Success,'',$auths->toArray());
         }
     }
@@ -140,7 +140,7 @@ class AuthBase extends Controller
         return ResultService::makeResult(ResultService::Success,'',$auth->toArray());
     }
 
-    /**获取树形权限
+    /**获取树形权限（管理配置用）有roleId则返回该role的权限树（带选择标识），否则返回一个普通权限树（标识为不选）
      * @param Request $request
      * @return \think\response\Json
      * @throws TokenException
@@ -152,15 +152,29 @@ class AuthBase extends Controller
         if(!TokenService::validAdminToken($request->header('token'))){
             throw new TokenException();
         }
-        $roleId=TokenService::getCurrentVars($request->header('token'),'role');
-        $auths=RoleAuthModel::where('role_id','=',$roleId)->field('auth_id')->select()->toArray();
-        $roleAuth=array();
-        foreach($auths as $item){
-            $roleAuth[]=$item['auth_id'];
+        $tag=$request->has('tag')?$request->param('tag'):'checked';//表示权限是否被允许的键名，用于前端生成带复选框的树时使用
+        $tagSuccessValue=$request->has('tagSuccessValue')?$request->param('tagSuccessValue'):'1';
+        $tagFailureValue=$request->has('tagFailureValue')?$request->param('tagSuccessValue'):'0';
+        if($request->has('roleId')){
+            $roleId=$request->param('roleId');
+            (new IDPositive())->singleCheck(['id'=>$roleId]);
+            $auths=RoleAuthModel::where('role_id','=',$roleId)->field('auth_id')->select()->toArray();
+            $roleAuth=array();
+            foreach($auths as $item){
+                $roleAuth[]=$item['auth_id'];
+            }
+            return ResultService::makeResult(ResultService::Success,'',AuthModel::generateAuthTree($roleAuth,$tag,$tagSuccessValue,$tagFailureValue));
         }
-        return ResultService::makeResult(ResultService::Success,'',AuthModel::generateAuthTree($roleAuth));
-        //return ResultService::makeResult(ResultService::Success,'',$roleAuth);
+        else{
+            return ResultService::makeResult(ResultService::Success,'',AuthModel::generateAuthTree(array(),$tag,$tagSuccessValue,$tagFailureValue));
+        }
     }
+
+    /**获取角色的树形菜单（前端展示用）
+     * @param Request $request
+     * @return \think\response\Json
+     * @throws TokenException
+     */
     public function getTreeOfRole(Request $request){
         if(!TokenService::validAdminToken($request->header('token'))){
             throw new TokenException();

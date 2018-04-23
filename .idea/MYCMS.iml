@@ -14,5 +14,29 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module-library">
+      <library name="PHP" type="php">
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/vendor/composer" />
+          <root url="file://$MODULE_DIR$/vendor/topthink/think-captcha" />
+          <root url="file://$MODULE_DIR$/vendor/topthink/think-helper" />
+          <root url="file://$MODULE_DIR$/vendor/topthink/think-image" />
+          <root url="file://$MODULE_DIR$/vendor/topthink/think-installer" />
+          <root url="file://$MODULE_DIR$/vendor/topthink/think-migration" />
+          <root url="file://$MODULE_DIR$/vendor/topthink/think-mongo" />
+          <root url="file://$MODULE_DIR$/vendor/topthink/think-queue" />
+        </CLASSES>
+        <SOURCES>
+          <root url="file://$MODULE_DIR$/vendor/composer" />
+          <root url="file://$MODULE_DIR$/vendor/topthink/think-captcha" />
+          <root url="file://$MODULE_DIR$/vendor/topthink/think-helper" />
+          <root url="file://$MODULE_DIR$/vendor/topthink/think-image" />
+          <root url="file://$MODULE_DIR$/vendor/topthink/think-installer" />
+          <root url="file://$MODULE_DIR$/vendor/topthink/think-migration" />
+          <root url="file://$MODULE_DIR$/vendor/topthink/think-mongo" />
+          <root url="file://$MODULE_DIR$/vendor/topthink/think-queue" />
+        </SOURCES>
+      </library>
+    </orderEntry>
   </component>
 </module>

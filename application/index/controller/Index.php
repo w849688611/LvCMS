@@ -13,8 +13,7 @@ class Index extends Controller
 {
     public function index(Request $request)
     {
-        $view=new View();
-      return $view->fetch();
+        var_dump($request->param());
     }
 
 }
