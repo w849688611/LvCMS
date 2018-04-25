@@ -52,6 +52,14 @@ Route::rule('api/category/delete','portal/CategoryBase/delete');
 Route::rule('api/category/update','portal/CategoryBase/update');
 Route::rule('api/category/get','portal/CategoryBase/get');
 Route::rule('api/category/getTree','portal/CategoryBase/getTree');
+/**
+ * 内容相关接口
+ */
+Route::rule('api/post/add','portal/PostBase/add');
+Route::rule('api/post/delete','portal/PostBase/delete');
+Route::rule('api/post/update','portal/PostBase/update');
+Route::rule('api/post/get','portal/PostBase/get');
+Route::rule('api/post/getByPage','portal/PostBase/getByPage');
 
 Hook::listen('plugin_route');
 

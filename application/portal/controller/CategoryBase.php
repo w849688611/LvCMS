@@ -13,7 +13,7 @@ use app\lib\exception\TokenException;
 use app\lib\validate\IDPositive;
 use app\portal\model\CategoryModel;
 use app\portal\model\CategoryPostModel;
-use app\portal\validate\CategoryAddValidate;
+use app\portal\validate\category\CategoryAddValidate;
 use app\service\ResultService;
 use app\service\TokenService;
 use think\Controller;
@@ -36,7 +36,7 @@ class CategoryBase extends Controller
             $category->content=$request->param('content','','htmlspecialchars_decode');
         }
         if($request->has('more')){
-            $category->more=$request->param('more','','json_decode');
+            $category->more=json_decode(htmlspecialchars_decode($request->param('more')),true);
         }
         $category->allowField(true)->save();
         return ResultService::success('添加栏目成功');
@@ -158,5 +158,12 @@ class CategoryBase extends Controller
             //var_dump(CategoryModel::generateCategoryTree(array(),$tag,$tagSuccessValue,$tagFailureValue));
             return ResultService::makeResult(ResultService::Success,'',CategoryModel::generateCategoryTree(array(),$tag,$tagSuccessValue,$tagFailureValue));
         }
+    }
+    public function getPostOfCategory(Request $request){
+        (new IDPositive())->goCheck();
+        $id=$request->param('id');
+        $category=CategoryModel::where('id','=',$id)->find();
+        $posts=$category->post();
+        return ResultService::makeResult(ResultService::Success,'',$posts);
     }
 }

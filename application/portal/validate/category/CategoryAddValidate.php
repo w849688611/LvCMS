@@ -6,7 +6,7 @@
  * Time: 下午9:23
  */
 
-namespace app\portal\validate;
+namespace app\portal\validate\category;
 
 
 use app\lib\validate\BaseValidate;

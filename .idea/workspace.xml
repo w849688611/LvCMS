@@ -2,23 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="307f6991-2f40-409d-8243-a8605a700098" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ToDo.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/application/portal/controller/CategoryBase.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/application/portal/model/CategoryModel.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/application/portal/model/CategoryPostModel.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/application/portal/model/PostModel.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/application/portal/validate/CategoryAddValidate.php" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/application/admin/controller/Post.php" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/application/admin/controller/Category.php" afterPath="$PROJECT_DIR$/application/portal/controller/PostBase.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/MYCMS.iml" afterPath="$PROJECT_DIR$/.idea/MYCMS.iml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/application/portal/validate/CategoryAddValidate.php" afterPath="$PROJECT_DIR$/application/portal/validate/category/CategoryAddValidate.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/admin/controller/AdminBase.php" afterPath="$PROJECT_DIR$/application/admin/controller/AdminBase.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/admin/controller/AuthBase.php" afterPath="$PROJECT_DIR$/application/admin/controller/AuthBase.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/admin/controller/RoleBase.php" afterPath="$PROJECT_DIR$/application/admin/controller/RoleBase.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/admin/model/AuthModel.php" afterPath="$PROJECT_DIR$/application/admin/model/AuthModel.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/index/controller/Index.php" afterPath="$PROJECT_DIR$/application/index/controller/Index.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/lib/validate/BaseValidate.php" afterPath="$PROJECT_DIR$/application/lib/validate/BaseValidate.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/index/view/index/index.html" afterPath="$PROJECT_DIR$/application/index/view/index/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/portal/controller/CategoryBase.php" afterPath="$PROJECT_DIR$/application/portal/controller/CategoryBase.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/portal/controller/PostBase.php" afterPath="$PROJECT_DIR$/application/portal/controller/PostBase.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/route.php" afterPath="$PROJECT_DIR$/application/route.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -34,14 +23,12 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Index.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/application/index/controller/Index.php">
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/application/index/view/index/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="256">
-              <caret line="15" column="36" lean-forward="false" selection-start-line="15" selection-start-column="36" selection-end-line="15" selection-end-column="36" />
-              <folding>
-                <element signature="e#39#70#0#PHP" expanded="true" />
-              </folding>
+            <state relative-caret-position="285">
+              <caret line="16" column="7" lean-forward="false" selection-start-line="16" selection-start-column="7" selection-end-line="16" selection-end-column="7" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -49,8 +36,8 @@
       <file leaf-file-name="CategoryBase.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/application/portal/controller/CategoryBase.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="313">
-              <caret line="158" column="12" lean-forward="true" selection-start-line="158" selection-start-column="12" selection-end-line="158" selection-end-column="12" />
+            <state relative-caret-position="-1063">
+              <caret line="115" column="9" lean-forward="false" selection-start-line="115" selection-start-column="9" selection-end-line="115" selection-end-column="9" />
               <folding>
                 <element signature="e#126#163#0#PHP" expanded="true" />
               </folding>
@@ -58,36 +45,46 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CategoryModel.php" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/application/portal/model/CategoryModel.php">
+      <file leaf-file-name="PostBase.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/application/portal/controller/PostBase.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1856">
-              <caret line="69" column="20" lean-forward="false" selection-start-line="69" selection-start-column="20" selection-end-line="69" selection-end-column="20" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AuthModel.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/application/admin/model/AuthModel.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="537">
-              <caret line="55" column="31" lean-forward="true" selection-start-line="55" selection-start-column="31" selection-end-line="55" selection-end-column="31" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="RoleBase.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/application/admin/controller/RoleBase.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-112">
-              <caret line="99" column="42" lean-forward="false" selection-start-line="99" selection-start-column="42" selection-end-line="99" selection-end-column="42" />
+            <state relative-caret-position="354">
+              <caret line="178" column="9" lean-forward="true" selection-start-line="178" selection-start-column="9" selection-end-line="178" selection-end-column="9" />
               <folding>
-                <element signature="e#125#159#0#PHP" expanded="true" />
-                <element signature="e#3129#3852#0#PHP" expanded="false" />
-                <element signature="e#4135#4708#0#PHP" expanded="false" />
+                <element signature="e#126#163#0#PHP" expanded="true" />
+                <element signature="e#1749#2305#0#PHP" expanded="false" />
+                <element signature="e#2428#4407#0#PHP" expanded="false" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PostModel.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/application/portal/model/PostModel.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="124">
+              <caret line="13" column="18" lean-forward="false" selection-start-line="13" selection-start-column="18" selection-end-line="13" selection-end-column="18" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="route.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/application/route.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1308">
+              <caret line="62" column="0" lean-forward="true" selection-start-line="62" selection-start-column="0" selection-end-line="62" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PostAddValidate.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/application/portal/validate/post/PostAddValidate.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="406">
+              <caret line="19" column="32" lean-forward="false" selection-start-line="19" selection-start-column="32" selection-end-line="19" selection-end-column="32" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -113,8 +110,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/application/lib/exception/BaseException.php" />
-        <option value="$PROJECT_DIR$/application/admin/validate/AdminAddValidate.php" />
         <option value="$PROJECT_DIR$/application/lib/exception/ExceptionHandle.php" />
         <option value="$PROJECT_DIR$/application/lib/exception/ParamException.php" />
         <option value="$PROJECT_DIR$/application/extra/security.php" />
@@ -143,7 +138,6 @@
         <option value="$PROJECT_DIR$/application/admin/model/RoleAuthModel.php" />
         <option value="$PROJECT_DIR$/application/admin/validate/auth/AuthAddValidate.php" />
         <option value="$PROJECT_DIR$/application/index/view/index.html" />
-        <option value="$PROJECT_DIR$/application/index/view/index/index.html" />
         <option value="$PROJECT_DIR$/application/service/TokenService.php" />
         <option value="$PROJECT_DIR$/application/admin/controller/Post.php" />
         <option value="$PROJECT_DIR$/application/common.php" />
@@ -151,19 +145,22 @@
         <option value="$PROJECT_DIR$/ToDo.txt" />
         <option value="$PROJECT_DIR$/application/admin/controller/Category.php" />
         <option value="$PROJECT_DIR$/application/admin/controller/CategoryBase.php" />
-        <option value="$PROJECT_DIR$/application/portal/controller/PostBase.php" />
         <option value="$PROJECT_DIR$/application/portal/validate/CategoryAddValidate.php" />
         <option value="$PROJECT_DIR$/application/portal/model/PostModel.php" />
-        <option value="$PROJECT_DIR$/application/index/controller/Index.php" />
         <option value="$PROJECT_DIR$/application/admin/controller/RoleBase.php" />
         <option value="$PROJECT_DIR$/application/admin/controller/AdminBase.php" />
         <option value="$PROJECT_DIR$/application/admin/model/AuthModel.php" />
         <option value="$PROJECT_DIR$/application/lib/validate/BaseValidate.php" />
         <option value="$PROJECT_DIR$/application/portal/model/CategoryPostModel.php" />
         <option value="$PROJECT_DIR$/application/admin/controller/AuthBase.php" />
-        <option value="$PROJECT_DIR$/application/route.php" />
-        <option value="$PROJECT_DIR$/application/portal/controller/CategoryBase.php" />
         <option value="$PROJECT_DIR$/application/portal/model/CategoryModel.php" />
+        <option value="$PROJECT_DIR$/application/portal/validate/category/CategoryAddValidate.php" />
+        <option value="$PROJECT_DIR$/application/portal/validate/post/PostAddValidate.php" />
+        <option value="$PROJECT_DIR$/application/index/view/index/index.html" />
+        <option value="$PROJECT_DIR$/application/index/controller/Index.php" />
+        <option value="$PROJECT_DIR$/application/portal/controller/CategoryBase.php" />
+        <option value="$PROJECT_DIR$/application/route.php" />
+        <option value="$PROJECT_DIR$/application/portal/controller/PostBase.php" />
       </list>
     </option>
   </component>
@@ -290,6 +287,7 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/application/portal/validate/category" />
       <recent name="$PROJECT_DIR$/application/portal/controller" />
       <recent name="E:\WWW\MYCMS\application\index\view\index" />
       <recent name="E:\WWW\MYCMS\application\admin\validate\admin" />
@@ -402,19 +400,28 @@
       <workItem from="1524136073042" duration="2503000" />
       <workItem from="1524193546398" duration="3377000" />
       <workItem from="1524202619929" duration="3985000" />
-      <workItem from="1524402203128" duration="14186000" />
+      <workItem from="1524402203128" duration="24735000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="76668000" />
+    <option name="totallyTimeSpent" value="87217000" />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
   </component>
   <component name="ToolWindowManager">
     <frame x="11" y="27" width="1280" height="725" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1898223" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32901135" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32901135" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -443,23 +450,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/thinkphp/library/think/Validate.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="276">
-          <caret line="1228" column="25" lean-forward="false" selection-start-line="1228" selection-start-column="20" selection-end-line="1228" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="-1470">
-            <caret line="8" column="17" lean-forward="false" selection-start-line="8" selection-start-column="17" selection-end-line="8" selection-end-column="17" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/thinkphp/library/think/exception/Handle.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1500">
@@ -623,13 +613,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/application/index/view/index/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="450">
-          <caret line="15" column="28" lean-forward="false" selection-start-line="15" selection-start-column="28" selection-end-line="15" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/application/common.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="300">
@@ -674,22 +657,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ToDo.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="174">
-          <caret line="6" column="11" lean-forward="false" selection-start-line="6" selection-start-column="11" selection-end-line="6" selection-end-column="11" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/portal/controller/PostBase.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="87">
-          <caret line="8" column="20" lean-forward="false" selection-start-line="8" selection-start-column="20" selection-end-line="8" selection-end-column="20" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/application/admin/validate/role/RoleAddValidate.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="232">
@@ -706,44 +673,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/application/portal/validate/CategoryAddValidate.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="11" column="26" lean-forward="false" selection-start-line="11" selection-start-column="26" selection-end-line="11" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/admin/controller/AdminBase.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="438">
-          <caret line="134" column="41" lean-forward="true" selection-start-line="134" selection-start-column="41" selection-end-line="134" selection-end-column="41" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/thinkphp/library/think/Request.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-519">
           <caret line="979" column="14" lean-forward="false" selection-start-line="979" selection-start-column="14" selection-end-line="979" selection-end-column="14" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/index/controller/Index.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="256">
-          <caret line="15" column="36" lean-forward="false" selection-start-line="15" selection-start-column="36" selection-end-line="15" selection-end-column="36" />
-          <folding>
-            <element signature="e#39#70#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/portal/model/PostModel.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="314">
-          <caret line="20" column="93" lean-forward="false" selection-start-line="20" selection-start-column="93" selection-end-line="20" selection-end-column="93" />
           <folding />
         </state>
       </provider>
@@ -761,28 +694,9 @@
         <state relative-caret-position="-112">
           <caret line="99" column="42" lean-forward="false" selection-start-line="99" selection-start-column="42" selection-end-line="99" selection-end-column="42" />
           <folding>
-            <element signature="e#125#159#0#PHP" expanded="true" />
+            <element signature="e#125#159#0#PHP" expanded="false" />
             <element signature="e#3129#3852#0#PHP" expanded="false" />
             <element signature="e#4135#4708#0#PHP" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/route.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-101">
-          <caret line="42" column="29" lean-forward="false" selection-start-line="42" selection-start-column="22" selection-end-line="42" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/admin/controller/AuthBase.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="155" column="55" lean-forward="false" selection-start-line="155" selection-start-column="40" selection-end-line="155" selection-end-column="55" />
-          <folding>
-            <element signature="e#3028#3750#0#PHP" expanded="false" />
-            <element signature="e#4034#4612#0#PHP" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -795,29 +709,125 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/application/portal/controller/CategoryBase.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="313">
-          <caret line="158" column="12" lean-forward="true" selection-start-line="158" selection-start-column="12" selection-end-line="158" selection-end-column="12" />
-          <folding>
-            <element signature="e#126#163#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/application/admin/model/AuthModel.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="537">
-          <caret line="55" column="31" lean-forward="true" selection-start-line="55" selection-start-column="31" selection-end-line="55" selection-end-column="31" />
+          <caret line="55" column="31" lean-forward="false" selection-start-line="55" selection-start-column="31" selection-end-line="55" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/portal/validate/category/CategoryAddValidate.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="87">
+          <caret line="8" column="31" lean-forward="true" selection-start-line="8" selection-start-column="31" selection-end-line="8" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ToDo.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="145">
+          <caret line="5" column="0" lean-forward="true" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/application/portal/model/CategoryModel.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1856">
-          <caret line="69" column="20" lean-forward="false" selection-start-line="69" selection-start-column="20" selection-end-line="69" selection-end-column="20" />
+        <state relative-caret-position="-1783">
+          <caret line="16" column="20" lean-forward="false" selection-start-line="16" selection-start-column="20" selection-end-line="16" selection-end-column="20" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/thinkphp/library/think/model/relation/BelongsToMany.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="317">
+          <caret line="449" column="18" lean-forward="true" selection-start-line="449" selection-start-column="18" selection-end-line="449" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/index/controller/Index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="489">
+          <caret line="30" column="22" lean-forward="false" selection-start-line="30" selection-start-column="22" selection-end-line="30" selection-end-column="22" />
+          <folding>
+            <element signature="e#39#70#0#PHP" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/index/view/index/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="16" column="7" lean-forward="false" selection-start-line="16" selection-start-column="7" selection-end-line="16" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/admin/controller/AdminBase.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-40">
+          <caret line="134" column="41" lean-forward="false" selection-start-line="134" selection-start-column="41" selection-end-line="134" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/admin/controller/AuthBase.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="454">
+          <caret line="139" column="85" lean-forward="true" selection-start-line="128" selection-start-column="8" selection-end-line="139" selection-end-column="85" />
+          <folding>
+            <element signature="e#3028#3750#0#PHP" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/portal/validate/post/PostAddValidate.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="406">
+          <caret line="19" column="32" lean-forward="false" selection-start-line="19" selection-start-column="32" selection-end-line="19" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/portal/controller/CategoryBase.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1063">
+          <caret line="115" column="9" lean-forward="false" selection-start-line="115" selection-start-column="9" selection-end-line="115" selection-end-column="9" />
+          <folding>
+            <element signature="e#126#163#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/route.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1308">
+          <caret line="62" column="0" lean-forward="true" selection-start-line="62" selection-start-column="0" selection-end-line="62" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/portal/model/PostModel.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="124">
+          <caret line="13" column="18" lean-forward="false" selection-start-line="13" selection-start-column="18" selection-end-line="13" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/portal/controller/PostBase.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="354">
+          <caret line="178" column="9" lean-forward="true" selection-start-line="178" selection-start-column="9" selection-end-line="178" selection-end-column="9" />
+          <folding>
+            <element signature="e#126#163#0#PHP" expanded="true" />
+            <element signature="e#1749#2305#0#PHP" expanded="false" />
+            <element signature="e#2428#4407#0#PHP" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
