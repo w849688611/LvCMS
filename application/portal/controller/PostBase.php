@@ -179,4 +179,7 @@ class PostBase extends Controller
         }
         return ResultService::makeResult(ResultService::Success,'',$posts->toArray());
     }
+    public function getCommentOfPost(Request $request){
+
+    }
 }

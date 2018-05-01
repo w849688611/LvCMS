@@ -86,24 +86,29 @@ class AdminBase extends Controller
         (new IDPositive())->goCheck();
         $id=$request->param('id');
         $admin=AdminModel::where('id','=',$id)->find();
-        if($request->has('password')){
-            (new AdminPasswordValidate())->goCheck();
-            $admin->password=$request->param('password');
-        }
-        if($request->has('role')){
-            (new AdminRoleValidate())->goCheck();
-            $admin->role=$request->param('role');
-        }
-        if($request->has('status')){
-            (new AdminStatusValidate())->goCheck();
-            $status=$request->param('status');
-            $admin->status=$status;
-            if($status==AdminStatusEnum::NORMAL){
-                $admin->error_count=0;
+        if($admin){
+            if($request->has('password')){
+                (new AdminPasswordValidate())->goCheck();
+                $admin->password=$request->param('password');
             }
+            if($request->has('role')){
+                (new AdminRoleValidate())->goCheck();
+                $admin->role=$request->param('role');
+            }
+            if($request->has('status')){
+                (new AdminStatusValidate())->goCheck();
+                $status=$request->param('status');
+                $admin->status=$status;
+                if($status==AdminStatusEnum::NORMAL){
+                    $admin->error_count=0;
+                }
+            }
+            $admin->save();
+            return ResultService::success('更新管理员成功');
         }
-        $admin->save();
-        return ResultService::success('更新管理员成功');
+        else{
+            return ResultService::failure('管理员不存在');
+        }
     }
 
     /**根据id获取管理员信息
