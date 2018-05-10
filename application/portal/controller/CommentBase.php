@@ -56,6 +56,7 @@ class CommentBase extends Controller
         $id=$request->param('id');
         $comment=CommentModel::where('id','=',$id)->find();
         if($comment){
+            CommentModel::where('parent_id','=',$comment->id)->delete();
             $comment->delete();
             return ResultService::success('删除评论成功');
         }

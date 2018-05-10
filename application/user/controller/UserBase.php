@@ -16,6 +16,7 @@ use app\service\TokenService;
 use app\user\enum\UserStatusEnum;
 use app\user\model\UserModel;
 use app\user\validate\UserAddValidate;
+use app\user\validate\UserPasswordValidate;
 use app\user\validate\UserStatusValidate;
 use think\Controller;
 use think\Request;
@@ -78,7 +79,7 @@ class UserBase extends Controller
         $user=UserModel::where('id','=',$id)->find();
         if($user){
             if($request->has('password')){
-                (new UserAddValidate())->singleCheck(['account'=>$user->account,'password'=>$request->param('password')]);
+                (new UserPasswordValidate())->goCheck();
                 $user->password=$request->param('password');
             }
             if($request->has('type')){
@@ -115,7 +116,7 @@ class UserBase extends Controller
         if($request->has('id')){
             (new IDPositive())->goCheck();
             $id=$request->param('id');
-            $user=UserModel::where('id','=',$id)->find();
+            $user=UserModel::where('id','=',$id)->find()->hidden();
             if($user){
                 return ResultService::makeResult(ResultService::Success,'',$user->toArray());
             }

@@ -25,4 +25,10 @@ class UserModel extends Model
     public function setMoreAttr($value){
         return json_encode($value);
     }
+    public function checkPassword($password){
+        if(md5(config('security.salt').$password)==$this->password){
+            return true;
+        }
+        return false;
+    }
 }

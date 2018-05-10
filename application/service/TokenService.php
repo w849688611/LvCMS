@@ -83,4 +83,11 @@ class TokenService
         }
         return false;
     }
+    public static function validUserToken($token){
+        $payload=Cache::get($token);
+        if($payload){
+            return self::getCurrentVars($token,'isUser')=='1'?true:false;
+        }
+        return false;
+    }
 }

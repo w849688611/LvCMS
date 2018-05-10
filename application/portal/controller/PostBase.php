@@ -12,6 +12,7 @@ namespace app\portal\controller;
 use app\lib\exception\TokenException;
 use app\lib\validate\IDPositive;
 use app\portal\model\CategoryPostModel;
+use app\portal\model\CommentModel;
 use app\portal\model\PostModel;
 use app\portal\validate\post\PostAddValidate;
 use app\service\ResultService;
@@ -65,6 +66,7 @@ class PostBase extends Controller
         $post=PostModel::where('id','=',$id)->find();
         if($post){
             CategoryPostModel::where('post_id','=',$post->id)->delete();
+            CommentModel::where('post_id','=',$post->id)->delete();
             $post->delete();
             return ResultService::success('删除内容成功');
         }
@@ -179,7 +181,26 @@ class PostBase extends Controller
         }
         return ResultService::makeResult(ResultService::Success,'',$posts->toArray());
     }
-    public function getCommentOfPost(Request $request){
 
+    /**后台获取文章评论
+     * @param Request $request
+     * @return \think\response\Json
+     * @throws TokenException
+     */
+    public function getCommentOfPost(Request $request){
+        if(!TokenService::validAdminToken($request->header('token'))){
+            throw new TokenException();
+        }
+        (new IDPositive())->goCheck();
+        $id=$request->param('id');
+        if($request->has('page')){
+            $page=$request->param('page');
+            $pageSize=$request->has('pageSize')?$request->param('pageSize'):config('base.defaultPageSize');
+            $comments=CommentModel::getCommentTree($id,true,$page,$pageSize);
+        }
+        else{
+            $comments=CommentModel::getCommentTree($id,true);
+        }
+        return ResultService::makeResult(ResultService::Success,'',$comments);
     }
 }

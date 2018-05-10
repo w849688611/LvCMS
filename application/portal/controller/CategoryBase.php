@@ -159,11 +159,24 @@ class CategoryBase extends Controller
             return ResultService::makeResult(ResultService::Success,'',CategoryModel::generateCategoryTree(array(),$tag,$tagSuccessValue,$tagFailureValue));
         }
     }
+
+    /**获取栏目下内容
+     * @param Request $request
+     * @return \think\response\Json
+     * @throws TokenException
+     */
     public function getPostOfCategory(Request $request){
+        if(!TokenService::validAdminToken($request->header('token'))){
+            throw new TokenException();
+        }
         (new IDPositive())->goCheck();
         $id=$request->param('id');
         $category=CategoryModel::where('id','=',$id)->find();
-        $posts=$category->post();
+        $posts=[];
+        if($category){
+            $posts=$category->post;
+            $posts->hidden(['create_time','update_time','delete_time','pivot']);
+        }
         return ResultService::makeResult(ResultService::Success,'',$posts);
     }
 }

@@ -15,7 +15,7 @@ use app\user\model\UserModel;
 class UserAddValidate extends BaseValidate
 {
     protected $rule=[
-        'account'=>'require｜min:6|accountExist',
+        'account'=>'require|min:6|accountExist',
         'password'=>'require|min:6'
     ];
     protected $message=[

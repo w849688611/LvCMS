@@ -11,6 +11,7 @@
 use think\Route;
 use think\Hook;
 
+//后台相关接口
 /**
  * 管理员相关接口
  */
@@ -52,6 +53,7 @@ Route::rule('api/category/delete','portal/CategoryBase/delete');
 Route::rule('api/category/update','portal/CategoryBase/update');
 Route::rule('api/category/get','portal/CategoryBase/get');
 Route::rule('api/category/getTree','portal/CategoryBase/getTree');
+Route::rule('api/category/getPostOfCategory','portal/CategoryBase/getPostOfCategory');
 /**
  * 内容相关接口
  */
@@ -60,6 +62,44 @@ Route::rule('api/post/delete','portal/PostBase/delete');
 Route::rule('api/post/update','portal/PostBase/update');
 Route::rule('api/post/get','portal/PostBase/get');
 Route::rule('api/post/getByPage','portal/PostBase/getByPage');
+Route::rule('api/post/getCommentOfPost','portal/PostBase/getCommentOfPost');
+/**
+ * 管理评论相关接口
+ */
+Route::rule('api/comment/get','portal/CommentBase/get');
+Route::rule('api/comment/delete','portal/CommentBase/delete');
+/**
+ * 管理用户相关接口
+ */
+Route::rule('api/user/add','user/UserBase/add');
+Route::rule('api/user/delete','user/UserBase/delete');
+Route::rule('api/user/update','user/UserBase/update');
+Route::rule('api/user/get','user/UserBase/get');
+Route::rule('api/user/getByPage','user/UserBase/getByPage');
+
+//前台相关接口
+/**
+ * 前台用户接口
+ */
+Route::rule('api/front/user/login','user/UserFront/login');
+Route::rule('api/front/user/logout','user/UserFront/logout');
+Route::rule('api/front/user/checkLogin','user/UserFront/checkLogin');
+Route::rule('api/front/user/register','user/UserFront/register');
+Route::rule('api/front/user/update','user/UserFront/update');
+Route::rule('api/front/user/get','user/UserFront/get');
+/**
+ * 前端内容相关接口
+ */
+Route::rule('api/front/portal/getCategory','portal/PortalFront/getCategory');
+Route::rule('api/front/portal/getPostOfCategory','portal/PortalFront/getPostOfCategory');
+Route::rule('api/front/portal/getPost','portal/PortalFront/getPost');
+Route::rule('api/front/portal/getCommentOfPost','portal/PortalFront/getCommentOfPost');
+Route::rule('api/front/portal/addComment','portal/PortalFront/addComment');
+Route::rule('api/front/portal/deleteComment','portal/PortalFront/deleteComment');
+Route::rule('api/front/portal/getNav','portal/PortalFront/getNav');
+Route::rule('api/front/portal/getSlide','portal/PortalFront/getSlide');
+Route::rule('api/front/portal/getFriendLink','portal/PortalFront/getFriendLink');
+
 
 Hook::listen('plugin_route');
 
