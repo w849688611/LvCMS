@@ -97,6 +97,9 @@ class CategoryBase extends Controller
                 }
                 $category->parent_id=$request->param('parent_id');
             }
+            if($request->has('template_id')){
+                $category->template_id=$request->param('template_id');
+            }
             $category->save();
             return ResultService::success('更新栏目成功');
         }
@@ -117,9 +120,9 @@ class CategoryBase extends Controller
         if($request->has('id')){
             (new IDPositive())->goCheck();
             $id=$request->param('id');
-            $category=CategoryModel::where('id','=',$id)->find();
+            $category=CategoryModel::where('id','=',$id)->with('template')->find();
             if($category){
-                $category->hidden(['create_time','update_time']);
+                $category->hidden(['create_time','update_time','template.create_time','template_update_time']);
                 return ResultService::makeResult(ResultService::Success,'',$category->toArray());
             }
             else{
@@ -127,7 +130,7 @@ class CategoryBase extends Controller
             }
         }
         else{
-            $categories=CategoryModel::select();
+            $categories=CategoryModel::with('template')->select()->hidden(['create_time','update_time','template.create_time','template_update_time']);
             return ResultService::makeResult(ResultService::Success,'',$categories->toArray());
         }
     }

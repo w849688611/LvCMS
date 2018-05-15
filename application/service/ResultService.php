@@ -23,10 +23,10 @@ class ResultService
         ];
         return json($result);
     }
-    public static function success($msg=''){
-        return self::makeResult(self::Success,$msg);
+    public static function success($msg='',$data=[]){
+        return self::makeResult(self::Success,$msg,$data);
     }
-    public static function failure($msg=''){
-        return self::makeResult(self::Failure,$msg);
+    public static function failure($msg='',$data=[]){
+        return self::makeResult(self::Failure,$msg,$data);
     }
 }

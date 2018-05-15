@@ -124,6 +124,9 @@ class PostBase extends Controller
             if($request->has('more')){
                 $post->more=$request->param('more','','htmlspecialchars_decode,json_decode');
             }
+            if($request->has('template_id')){
+                $post->template_id=$request->param('template_id');
+            }
             $post->save();
             return ResultService::success('更新内容成功');
         }
@@ -144,9 +147,9 @@ class PostBase extends Controller
         if($request->has('id')){
             (new IDPositive())->goCheck();
             $id=$request->param('id');
-            $post=PostModel::where('id','=',$id)->with('category')->find();
+            $post=PostModel::where('id','=',$id)->with('category,template')->find();
             if($post){
-                $post->hidden(['create_time','update_time','category.create_time','category.update_time','category.pivot']);
+                $post->hidden(['create_time','update_time','category.create_time','category.update_time','category.pivot','template.create_time','template.update_time']);
                 return ResultService::makeResult(ResultService::Success,'',$post->toArray());
             }
             else{
@@ -154,8 +157,8 @@ class PostBase extends Controller
             }
         }
         else{
-            $posts=PostModel::with('category')->select();
-            $posts->hidden(['create_time','update_time','category.create_time','category.update_time','category.pivot']);
+            $posts=PostModel::with('category,template')->select();
+            $posts->hidden(['create_time','update_time','category.create_time','category.update_time','category.pivot','template.create_time','template.update_time']);
             return ResultService::makeResult(ResultService::Success,'',$posts->toArray());
         }
     }
@@ -176,8 +179,8 @@ class PostBase extends Controller
             $posts->hidden(['create_time','update_time','category.create_time','category.update_time','category.pivot']);
         }
         else{
-            $posts=PostModel::with('category')->select();
-            $posts->hidden(['create_time','update_time','category.create_time','category.update_time','category.pivot']);
+            $posts=PostModel::with('category,template')->select();
+            $posts->hidden(['create_time','update_time','category.create_time','category.update_time','category.pivot','template.create_time','template.update_time']);
         }
         return ResultService::makeResult(ResultService::Success,'',$posts->toArray());
     }

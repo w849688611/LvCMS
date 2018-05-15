@@ -12,9 +12,11 @@ namespace app\portal\controller;
 use app\lib\exception\TokenException;
 use app\lib\validate\IDPositive;
 use app\portal\enum\PostStatusEnum;
+use app\portal\enum\SingleStatusEnum;
 use app\portal\model\CategoryModel;
 use app\portal\model\CommentModel;
 use app\portal\model\PostModel;
+use app\portal\model\SingleModel;
 use app\portal\validate\comment\CommentAddValidate;
 use app\service\ResultService;
 use app\service\TokenService;
@@ -35,7 +37,7 @@ class PortalFront extends Controller
     public function getCategory(Request $request){
         (new IDPositive())->goCheck();
         $id=$request->param('id');
-        $category=CategoryModel::where('id','=',$id)->find();
+        $category=CategoryModel::where('id','=',$id)->with('template')->find();
         if($category){
             return ResultService::makeResult(ResultService::Success,'',$category->toArray());
         }
@@ -57,11 +59,11 @@ class PortalFront extends Controller
             $page=$request->param('page');
             $pageSize=$request->has('pageSize')?$request->param('pageSize'):config('base.defaultPageSize');
             if($category){
-                $posts=$category->post()->where('post_status','=',PostStatusEnum::NORMAL)->page($page,$pageSize)->select();
+                $posts=$category->post()->where('post_status','=',PostStatusEnum::NORMAL)->with('template')->page($page,$pageSize)->select();
             }
         }
         else{
-            $posts=$category->post()->where('post_status','=',PostStatusEnum::NORMAL)->select();
+            $posts=$category->post()->where('post_status','=',PostStatusEnum::NORMAL)->with('template')->select();
         }
         return ResultService::makeResult(ResultService::Success,'',$posts->toArray());
     }
@@ -75,7 +77,8 @@ class PortalFront extends Controller
         (new IDPositive())->goCheck();
         $id=$request->param('id');
         Hook::listen('before_get_post',$id);
-        $post=PostModel::where('id','=',$id)->where('post_status','=',PostStatusEnum::NORMAL)->find();
+        $post=PostModel::where('id','=',$id)->where('post_status','=',PostStatusEnum::NORMAL)
+            ->with('template')->find();
         if($post){
             Hook::listen('after_get_post',$post);
             return ResultService::makeResult(ResultService::Success,'',$post);
@@ -151,6 +154,23 @@ class PortalFront extends Controller
         else{
             return ResultService::failure('评论不存在');
         }
+    }
+
+    /**获取单页
+     * @param Request $request
+     * @return \think\response\Json
+     */
+    public function getSingle(Request $request){
+        (new IDPositive())->goCheck();
+        $id=$request->param('id');
+        Hook::listen('before_get_single',$id);
+        $single=SingleModel::where('id','=',$id)->where('status','=',SingleStatusEnum::NORMAL)
+            ->with('template')->find();
+        if($single){
+            Hook::listen('after_get_single',$single);
+            return ResultService::makeResult(ResultService::Success,'',$single);
+        }
+        return ResultService::failure('该页面不存在');
     }
     public function getNav(Request $request){
 

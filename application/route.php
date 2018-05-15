@@ -76,7 +76,20 @@ Route::rule('api/user/delete','user/UserBase/delete');
 Route::rule('api/user/update','user/UserBase/update');
 Route::rule('api/user/get','user/UserBase/get');
 Route::rule('api/user/getByPage','user/UserBase/getByPage');
-
+/**
+ * 文件相关接口
+ */
+Route::rule('api/file/add','file/FileBase/add');
+Route::rule('api/file/delete','file/FileBase/delete');
+Route::rule('api/file/get','file/FileBase/get');
+Route::rule('api/file/getByPage','file/FileBase/getByPage');
+Route::rule('api/file/getByMd5','file/FileBase/getByMd5');
+Route::rule('api/file/getBySha1','file/FileBase/getBySha1');
+/**
+ * 工具相关接口
+ */
+Route::rule('api/util/captcha/get','util/CaptchaBase/get');
+Route::rule('api/util/captcha/check','util/CaptchaBase/check');
 //前台相关接口
 /**
  * 前台用户接口

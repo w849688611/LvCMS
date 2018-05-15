@@ -91,4 +91,7 @@ class CategoryModel extends Model
     public function post(){
         return $this->belongsToMany('PostModel','category_post','post_id','category_id');
     }
+    public function template(){
+        return $this->belongsTo('TemplateModel','template_id');
+    }
 }

@@ -125,8 +125,8 @@ class UserBase extends Controller
             }
         }
         else{
-            $admins=UserModel::select();
-            return ResultService::makeResult(ResultService::Success,'',$admins->toArray());
+            $users=UserModel::select();
+            return ResultService::makeResult(ResultService::Success,'',$users->toArray());
         }
     }
 
