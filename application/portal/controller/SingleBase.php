@@ -148,7 +148,7 @@ class SingleBase extends Controller
             $singles->hidden(['create_time','update_time','template.create_time','template.update_time']);
         }
         else{
-            $singles=PostModel::with('template')->select();
+            $singles=SingleModel::with('template')->select();
             $singles->hidden(['create_time','update_time','template.create_time','template.update_time']);
         }
         return ResultService::makeResult(ResultService::Success,'',$singles->toArray());

@@ -69,6 +69,37 @@ Route::rule('api/post/getCommentOfPost','portal/PostBase/getCommentOfPost');
 Route::rule('api/comment/get','portal/CommentBase/get');
 Route::rule('api/comment/delete','portal/CommentBase/delete');
 /**
+ * 单页相关接口
+ */
+Route::rule('api/single/add','portal/SingleBase/add');
+Route::rule('api/single/delete','portal/SingleBase/delete');
+Route::rule('api/single/update','portal/SingleBase/update');
+Route::rule('api/single/get','portal/SingleBase/get');
+Route::rule('api/single/getByPage','portal/SingleBase/getByPage');
+/**
+ * 模版相关接口
+ */
+Route::rule('api/template/add','portal/TemplateBase/add');
+Route::rule('api/template/delete','portal/TemplateBase/delete');
+Route::rule('api/template/update','portal/TemplateBase/update');
+Route::rule('api/template/get','portal/TemplateBase/get');
+Route::rule('api/template/getCategoryTemplate','portal/TemplateBase/getCategoryTemplate');
+Route::rule('api/template/getSingleTemplate','portal/TemplateBase/getSingleTemplate');
+Route::rule('api/template/getPostTemplate','portal/TemplateBase/getPostTemplate');
+/**
+ * 导航相关接口
+ */
+Route::rule('api/nav/add','portal/NavBase/add');
+Route::rule('api/nav/delete','portal/NavBase/delete');
+Route::rule('api/nav/update','portal/NavBase/update');
+Route::rule('api/nav/get','portal/NavBase/get');
+Route::rule('api/nav/getByPage','portal/NavBase/getByPage');
+Route::rule('api/nav/geItemOfNav','portal/NavBase/geItemOfNav');
+Route::rule('api/nav/item/add','portal/NavItemBase/add');
+Route::rule('api/nav/item/delete','portal/NavItemBase/delete');
+Route::rule('api/nav/item/update','portal/NavItemBase/update');
+Route::rule('api/nav/item/get','portal/NavItemBase/get');
+/**
  * 管理用户相关接口
  */
 Route::rule('api/user/add','user/UserBase/add');

@@ -15,6 +15,7 @@ use app\portal\enum\PostStatusEnum;
 use app\portal\enum\SingleStatusEnum;
 use app\portal\model\CategoryModel;
 use app\portal\model\CommentModel;
+use app\portal\model\NavModel;
 use app\portal\model\PostModel;
 use app\portal\model\SingleModel;
 use app\portal\validate\comment\CommentAddValidate;
@@ -172,8 +173,22 @@ class PortalFront extends Controller
         }
         return ResultService::failure('该页面不存在');
     }
-    public function getNav(Request $request){
 
+    /**根据id获取导航组信息
+     * @param Request $request
+     * @return \think\response\Json
+     */
+    public function getNav(Request $request){
+        (new IDPositive())->goCheck();
+        $id=$request->param('id');
+        $nav=NavModel::where('id','=',$id)->find();
+        if($nav){
+            $nav->item=NavModel::generateItemTree($id);
+            return ResultService::success('',$nav->toArray());
+        }
+        else{
+            return ResultService::failure('导航组不存在');
+        }
     }
     public function getSlide(Request $request){
 
