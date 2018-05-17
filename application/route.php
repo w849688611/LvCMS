@@ -100,6 +100,20 @@ Route::rule('api/nav/item/delete','portal/NavItemBase/delete');
 Route::rule('api/nav/item/update','portal/NavItemBase/update');
 Route::rule('api/nav/item/get','portal/NavItemBase/get');
 /**
+ * 幻灯片相关接口
+ */
+Route::rule('api/slide/add','portal/SlideBase/add');
+Route::rule('api/slide/delete','portal/SlideBase/delete');
+Route::rule('api/slide/update','portal/SlideBase/update');
+Route::rule('api/slide/get','portal/SlideBase/get');
+Route::rule('api/slide/getByPage','portal/SlideBase/getByPage');
+Route::rule('api/slide/geItemOfNav','portal/SlideBase/geItemOfSlide');
+Route::rule('api/slide/item/add','portal/SlideItemBase/add');
+Route::rule('api/slide/item/delete','portal/SlideItemBase/delete');
+Route::rule('api/slide/item/update','portal/SlideItemBase/update');
+Route::rule('api/slide/item/get','portal/SlideItemBase/get');
+
+/**
  * 管理用户相关接口
  */
 Route::rule('api/user/add','user/UserBase/add');

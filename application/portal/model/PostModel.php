@@ -23,4 +23,11 @@ class PostModel extends Model
     public function template(){
         return $this->belongsTo('TemplateModel','template_id');
     }
+    /*************存取器**************/
+    public function getMoreAttr($value){
+        return json_decode($value,true);
+    }
+    public function setMoreAttr($value){
+        return json_encode($value);
+    }
 }

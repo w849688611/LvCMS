@@ -18,6 +18,7 @@ use app\portal\model\CommentModel;
 use app\portal\model\NavModel;
 use app\portal\model\PostModel;
 use app\portal\model\SingleModel;
+use app\portal\model\SlideModel;
 use app\portal\validate\comment\CommentAddValidate;
 use app\service\ResultService;
 use app\service\TokenService;
@@ -190,8 +191,22 @@ class PortalFront extends Controller
             return ResultService::failure('导航组不存在');
         }
     }
-    public function getSlide(Request $request){
 
+    /**根据id获取幻灯片组信息
+     * @param Request $request
+     * @return \think\response\Json
+     */
+    public function getSlide(Request $request){
+        (new IDPositive())->goCheck();
+        $id=$request->param('id');
+        $slide=SlideModel::where('id','=',$id)->find();
+        if($slide){
+            $slide->item=SlideModel::generateItem($id);
+            return ResultService::success('',$slide->toArray());
+        }
+        else{
+            return ResultService::failure('幻灯片组不存在');
+        }
     }
     public function getFriendLink(Request $request){
 

@@ -19,4 +19,11 @@ class TemplateModel extends Model
     public static function getByType($type){
         return self::where('type','=',$type)->select();
     }
+    /*************存取器**************/
+    public function getMoreAttr($value){
+        return json_decode($value,true);
+    }
+    public function setMoreAttr($value){
+        return json_encode($value);
+    }
 }
