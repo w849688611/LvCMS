@@ -67,6 +67,9 @@ class AdminLoginValidate extends BaseValidate
      * @throws AdminLockException
      */
     public function passwordCorrect($value){
+        if(!$this->admin){
+            return false;
+        }
         $result=$this->admin->checkPassword($value);
         if(!$result){
             $this->admin->error_count+=1;
