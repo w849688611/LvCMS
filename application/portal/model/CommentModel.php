@@ -21,10 +21,10 @@ class CommentModel extends Model
         return $this->belongsTo('PostModel','post_id');
     }
     public function user(){
-        return $this->belongsTo('app\user\Model\UserModel','user_id');
+        return $this->belongsTo('app\user\model\UserModel','user_id');
     }
     public function replyUser(){
-        return $this->belongsTo('app\user\Model\UserModel','reply_user_id');
+        return $this->belongsTo('app\user\model\UserModel','reply_user_id');
     }
 
     /**添加评论时计算一下楼层
@@ -61,9 +61,11 @@ class CommentModel extends Model
             ->toArray();
         for($i=0,$len=count($parentComment);$i<$len;$i++){
             $childComment=self::where('post_id','=',$postId)
-            ->where('parent_id','=',$parentComment[$i]['id'])
-                ->where('status','=',CommentStatusEnum::SHOW)
-                ->with('user,replyUser')
+            ->where('parent_id','=',$parentComment[$i]['id']);
+            if(!$flag){
+                $childComment=$childComment->where('status','=',CommentStatusEnum::SHOW);
+            }
+            $childComment=$childComment->with('user,replyUser')
                 ->order('create_time','asc')
                 ->select()
                 ->hidden(['update_time','user.password','user.error_count','user.create_time','user.update_time','reply_user.password','reply_user.create_time','reply_user.update_time','reply_user.error_count']);

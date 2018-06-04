@@ -56,18 +56,22 @@ class PortalFront extends Controller
         (new IDPositive())->goCheck();
         $id=$request->param('id');
         $category=CategoryModel::where('id','=',$id)->find();
-        $posts=[];
-        if($request->has('page')){
-            $page=$request->param('page');
-            $pageSize=$request->has('pageSize')?$request->param('pageSize'):config('base.defaultPageSize');
-            if($category){
-                $posts=$category->post()->where('post_status','=',PostStatusEnum::NORMAL)->with('template')->page($page,$pageSize)->select();
+        $pageResult=[];
+        if($category){
+            $posts=$category->post()->where('post_status','=',PostStatusEnum::NORMAL)->with('template')->select()->toArray();
+            $pageResult['total']=count($posts);
+            if($request->has('page')){
+                $pageResult['page']=$page=$request->param('page');
+                $pageResult['pageSize']=$pageSize=$request->has('pageSize')?$request->param('pageSize'):config('base.defaultPageSize');
+                $posts=$category->post()->where('post_status','=',PostStatusEnum::NORMAL)->with('template')->page($page,$pageSize)->select()->toArray();
             }
+            $pageResult['pageData']=$posts;
         }
         else{
-            $posts=$category->post()->where('post_status','=',PostStatusEnum::NORMAL)->with('template')->select();
+            $pageResult['total']=0;
+            $pageResult['pageData']=[];
         }
-        return ResultService::makeResult(ResultService::Success,'',$posts->toArray());
+        return ResultService::makeResult(ResultService::Success,'',$pageResult);
     }
 
     /**根据id获取post，若内容不可见则返回不可见
@@ -95,15 +99,19 @@ class PortalFront extends Controller
     public function getCommentOfPost(Request $request){
         (new IDPositive())->goCheck();
         $postId=$request->param('id');
+        $pageResult=[];
+        $pageResult['total']=CommentModel::where('post_id','=',$postId)
+            ->where('parent_id','=','0')->count();
         if($request->has('page')){
-            $page=$request->param('page');
-            $pageSize=$request->has('pageSize')?$request->param('pageSize'):config('base.defaultPageSize');
+            $pageResult['page']=$page=$request->param('page');
+            $pageResult['pageSize']=$pageSize=$request->has('pageSize')?$request->param('pageSize'):config('base.defaultPageSize');
             $comments=CommentModel::getCommentTree($postId,false,$page,$pageSize);
         }
         else{
             $comments=CommentModel::getCommentTree($postId,false);
         }
-        return ResultService::makeResult(ResultService::Success,'',$comments);
+        $pageResult['pageData']=$comments;
+        return ResultService::makeResult(ResultService::Success,'',$pageResult);
     }
 
     /**用户发表评论

@@ -127,15 +127,16 @@ class NavBase extends Controller
         if(!TokenService::validAdminToken($request->header('token'))){
             throw new TokenException();
         }
+        $pageResult=[];
+        $navs=NavModel::select()->toArray();
+        $pageResult['total']=count($navs);
         if($request->has('page')){
-            $page=$request->param('page');
-            $pageSize=$request->has('pageSize')?$request->param('pageSize'):config('base.defaultPageSize');
+            $pageResult['page']=$page=$request->param('page');
+            $pageResult['pageSize']=$pageSize=$request->has('pageSize')?$request->param('pageSize'):config('base.defaultPageSize');
             $navs=NavModel::page($page,$pageSize)->select();
         }
-        else{
-            $navs=NavModel::select();
-        }
-        return ResultService::success('',$navs->toArray());
+        $pageResult['pageData']=$navs;
+        return ResultService::success('',$pageResult);
     }
 
     /**获取导航组下的导航项

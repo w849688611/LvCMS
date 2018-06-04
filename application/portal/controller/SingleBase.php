@@ -35,7 +35,7 @@ class SingleBase extends Controller
             $single->content=$request->param('content','','htmlspecialchars_decode');
         }
         if($request->has('more')){
-            $single->more=$request->param('more','','htmlspecialchars_decode,json_decode');
+            $single->more=json_decode(htmlspecialchars_decode($request->param('more')),true);
         }
         $single->allowField(true)->save();
         return ResultService::success('添加单页成功');
@@ -91,7 +91,7 @@ class SingleBase extends Controller
                 $single->content=$request->param('content','','htmlspecialchars_decode');
             }
             if($request->has('more')){
-                $single->more=$request->param('more','','htmlspecialchars_decode,json_decode');
+                $single->more=json_decode(htmlspecialchars_decode($request->param('more')),true);
             }
             if($request->has('template_id')){
                 $single->template_id=$request->param('template_id');
@@ -141,16 +141,17 @@ class SingleBase extends Controller
         if(!TokenService::validAdminToken($request->header('token'))){
             throw new TokenException();
         }
+        $pageResult=[];
+        $singles=SingleModel::with('template')->select();
+        $singles->hidden(['create_time','update_time','template.create_time','template.update_time']);
+        $pageResult['total']=count($singles);
         if($request->has('page')){
-            $page=$request->param('page');
-            $pageSize=$request->has('pageSize')?$request->param('pageSize'):config('base.defaultPageSize');
+            $pageResult['page']=$page=$request->param('page');
+            $pageResult['pageSize']=$pageSize=$request->has('pageSize')?$request->param('pageSize'):config('base.defaultPageSize');
             $singles=SingleModel::page($page,$pageSize)->with('template')->select();
             $singles->hidden(['create_time','update_time','template.create_time','template.update_time']);
         }
-        else{
-            $singles=SingleModel::with('template')->select();
-            $singles->hidden(['create_time','update_time','template.create_time','template.update_time']);
-        }
-        return ResultService::makeResult(ResultService::Success,'',$singles->toArray());
+        $pageResult['pageData']=$singles;
+        return ResultService::makeResult(ResultService::Success,'',$pageResult);
     }
 }

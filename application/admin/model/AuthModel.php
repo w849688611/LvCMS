@@ -15,6 +15,13 @@ class AuthModel extends Model
 {
     protected $name='auth';
 
+    public function getMoreAttr($value){
+        return json_decode($value,true);
+    }
+    public function setMoreAttr($value){
+        return json_encode($value);
+    }
+
     /**根据用户权限获取用户的权限配置树
      * @param $roleAuth
      * @param string $tag
@@ -85,7 +92,7 @@ class AuthModel extends Model
                         if(!isset($auths[$j]['children'])){
                             $auths[$j]['children']=array();
                         }
-                        $auths[$j]['children'][]=$auths[$i];
+                        $auths[$j]['children'][]=&$auths[$i];
                         break;
                     }
                 }

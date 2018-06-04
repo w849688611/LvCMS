@@ -33,7 +33,10 @@ class TemplateBase extends Controller
         (new TemplateAddValidate())->goCheck();
         $template=new TemplateModel($request->param());
         if($request->has('more')){
-            $template->more=$template->more=$request->param('more','','htmlspecialchars_decode,json_decode');
+            $template->more=json_decode(htmlspecialchars_decode($request->param('more')),true);
+        }
+        if($template->is_default&&$template->is_default==1){
+            TemplateModel::where('is_default','=','1')->update(['is_default'=>0]);
         }
         $template->allowField(true)->save();
         return ResultService::success('添加模版成功');
@@ -83,10 +86,13 @@ class TemplateBase extends Controller
                 $template->type=$request->param('type');
             }
             if($request->has('more')){
-                $template->more=$request->param('more','','htmlspecialchars_decode,json_decode');
+                $template->more=json_decode(htmlspecialchars_decode($request->param('more')),true);
             }
             if($request->has('is_default')){
                 $template->is_default=$request->param('is_default');
+                if($template->is_default==1){
+                    TemplateModel::where('is_default','=','1')->update(['is_default'=>0]);
+                }
             }
             $template->save();
             return ResultService::success('更新模版成功');

@@ -18,7 +18,7 @@ class AdminAddValidate extends BaseValidate
     protected $rule=[
         'account'=>'require|min:6|accountExist',
         'password'=>'require|min:6',
-        'role'=>'require|positiveInt|roleValid'
+        'role_id'=>'require|positiveInt|roleValid'
     ];
     protected $message=[
         'account.require'=>'账号不能为空',
@@ -26,9 +26,9 @@ class AdminAddValidate extends BaseValidate
         'account.accountExist'=>'账号已存在',
         'password.require'=>'密码不能为空',
         'password.min'=>'密码长度至少6位',
-        'role.require'=>'角色id不能为空',
-        'role.positiveInt'=>'角色id必须为有效正整数',
-        'role.roleValid'=>'角色无效'
+        'role_id.require'=>'角色id不能为空',
+        'role_id.positiveInt'=>'角色id必须为有效正整数',
+        'role_id.roleValid'=>'角色无效'
     ];
 
     /**账号是否已经存在

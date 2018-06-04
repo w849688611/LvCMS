@@ -141,15 +141,16 @@ class FileBase extends Controller
         if(!TokenService::validAdminToken($request->header('token'))){
             throw new TokenException();
         }
+        $pageResult=[];
+        $file=FileModel::select()->toArray();
+        $pageResult['total']=count($file);
         if($request->has('page')){
-            $page=$request->param('page');
-            $pageSize=$request->has('pageSize')?$request->param('pageSize'):config('base.defaultPageSize');
-            $file=FileModel::page($page,$pageSize)->select();
+            $pageResult['page']=$page=$request->param('page');
+            $pageResult['pageSize']=$pageSize=$request->has('pageSize')?$request->param('pageSize'):config('base.defaultPageSize');
+            $file=FileModel::page($page,$pageSize)->select()->toArray();
         }
-        else{
-            $file=FileModel::select();
-        }
-        return ResultService::makeResult(ResultService::Success,'',$file->toArray());
+        $pageResult['pageData']=$file;
+        return ResultService::makeResult(ResultService::Success,'',$pageResult);
     }
     /**根据文件md5查找文件
      * @param Request $request

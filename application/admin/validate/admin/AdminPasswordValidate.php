@@ -14,7 +14,7 @@ use app\lib\validate\BaseValidate;
 class AdminPasswordValidate extends BaseValidate
 {
     protected $rule=[
-        'password'=>'min:6'
+        'password'=>'require|min:6'
     ];
     protected $message=[
         'password.min'=>'密码至少6位'

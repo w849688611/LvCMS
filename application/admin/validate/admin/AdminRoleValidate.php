@@ -15,10 +15,10 @@ use app\lib\validate\BaseValidate;
 class AdminRoleValidate extends BaseValidate
 {
     protected $rule=[
-        'role'=>'roleValid'
+        'role_id'=>'roleValid'
     ];
     protected $message=[
-        'role'=>'角色无效'
+        'role_id'=>'角色无效'
     ];
     public function roleValid($value){
         $role=RoleModel::where('id','=',$value)->find();

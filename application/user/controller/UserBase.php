@@ -139,14 +139,15 @@ class UserBase extends Controller
         if(!TokenService::validAdminToken($request->header('token'))){
             throw new TokenException();
         }
+        $pageResult=[];
+        $user=UserModel::select()->toArray();
+        $pageResult['total']=count($user);
         if($request->has('page')){
-            $page=$request->param('page');
-            $pageSize=$request->has('pageSize')?$request->param('pageSize'):config('base.defaultPageSize');
-            $user=UserModel::page($page,$pageSize)->select();
+            $pageResult['page']=$page=$request->param('page');
+            $pageResult['pageSize']=$pageSize=$request->has('pageSize')?$request->param('pageSize'):config('base.defaultPageSize');
+            $user=UserModel::page($page,$pageSize)->select()->toArray();
         }
-        else{
-            $user=UserModel::select();
-        }
-        return ResultService::makeResult(ResultService::Success,'',$user->toArray());
+        $pageResult['pageData']=$user;
+        return ResultService::makeResult(ResultService::Success,'',$pageResult);
     }
 }

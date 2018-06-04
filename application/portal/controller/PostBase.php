@@ -38,7 +38,7 @@ class PostBase extends Controller
             $post->content=$request->param('content','','htmlspecialchars_decode');
         }
         if($request->has('more')){
-            $post->more=$request->param('more','','htmlspecialchars_decode,json_decode');
+            $post->more=json_decode(htmlspecialchars_decode($request->param('more'),true));
         }
         $post->allowField(true)->save();
         if($request->has('category')){
@@ -88,6 +88,15 @@ class PostBase extends Controller
         $id=$request->param('id');
         $post=PostModel::where('id','=',$id)->find();
         if($post){
+            if($request->has('category')){
+                $category=json_decode(htmlspecialchars_decode($request->param('category')),true);
+                $categoryIds=array();
+                for($i=0,$len=count($category);$i<$len;$i++){
+                    $categoryIds[]=$category[$i]['id'];
+                }
+                CategoryPostModel::where('post_id','=',$post->id)->delete();
+                $post->category()->save($categoryIds);
+            }
             if($request->has('post_status')){
                 $post->post_status=$request->param('post_status');
             }
@@ -122,7 +131,7 @@ class PostBase extends Controller
                 $post->content=$request->param('content','','htmlspecialchars_decode');
             }
             if($request->has('more')){
-                $post->more=$request->param('more','','htmlspecialchars_decode,json_decode');
+                $post->more=json_decode(htmlspecialchars_decode($request->param('more')),true);
             }
             if($request->has('template_id')){
                 $post->template_id=$request->param('template_id');
@@ -172,19 +181,45 @@ class PostBase extends Controller
         if(!TokenService::validAdminToken($request->header('token'))){
             throw new TokenException();
         }
+        $pageResult=[];
+        $posts=PostModel::with('category,template')->select();
+        $posts->hidden(['create_time','update_time','category.create_time','category.update_time','category.pivot','template.create_time','template.update_time']);
+        $pageResult['total']=count($posts);
         if($request->has('page')){
-            $page=$request->param('page');
-            $pageSize=$request->has('pageSize')?$request->param('pageSize'):config('base.defaultPageSize');
+            $pageResult['page']=$page=$request->param('page');
+            $pageResult['pageSize']=$pageSize=$request->has('pageSize')?$request->param('pageSize'):config('base.defaultPageSize');
             $posts=PostModel::page($page,$pageSize)->with('category')->select();
             $posts->hidden(['create_time','update_time','category.create_time','category.update_time','category.pivot']);
         }
-        else{
-            $posts=PostModel::with('category,template')->select();
-            $posts->hidden(['create_time','update_time','category.create_time','category.update_time','category.pivot','template.create_time','template.update_time']);
-        }
-        return ResultService::makeResult(ResultService::Success,'',$posts->toArray());
+        $pageResult['pageData']=$posts;
+        return ResultService::makeResult(ResultService::Success,'',$pageResult);
     }
 
+    /**搜索文章
+     * @param Request $request
+     * @return \think\response\Json
+     * @throws TokenException
+     */
+    public function search(Request $request){
+        if(!TokenService::validAdminToken($request->header('token'))){
+            throw new TokenException();
+        }
+        $keyword='';
+        if($request->has('keyword')){
+            $keyword=$request->param('keyword');
+        }
+        $pageResult=[];
+        $posts=PostModel::with('category,template')->where('title','like',"%$keyword%")->select();
+        $pageResult['total']=count($posts);
+        if($request->has('page')){
+            $pageResult['page']=$page=$request->param('page');
+            $pageResult['pageSize']=$pageSize=$request->has('pageSize')?$request->param('pageSize'):config('base.defaultPageSize');
+            $posts=PostModel::page($page,$pageSize)->with('category')->where('title','like',"%$keyword%")->select();
+            $posts->hidden(['create_time','update_time','category.create_time','category.update_time','category.pivot']);
+        }
+        $pageResult['pageData']=$posts;
+        return ResultService::makeResult(ResultService::Success,'',$pageResult);
+    }
     /**后台获取文章评论
      * @param Request $request
      * @return \think\response\Json
@@ -196,14 +231,15 @@ class PostBase extends Controller
         }
         (new IDPositive())->goCheck();
         $id=$request->param('id');
+        $pageResult=[];
+        $comments=CommentModel::getCommentTree($id,true);
+        $pageResult['total']=count($comments);
         if($request->has('page')){
-            $page=$request->param('page');
-            $pageSize=$request->has('pageSize')?$request->param('pageSize'):config('base.defaultPageSize');
+            $pageResult['page']=$page=$request->param('page');
+            $pageResult['pageSize']=$pageSize=$request->has('pageSize')?$request->param('pageSize'):config('base.defaultPageSize');
             $comments=CommentModel::getCommentTree($id,true,$page,$pageSize);
         }
-        else{
-            $comments=CommentModel::getCommentTree($id,true);
-        }
-        return ResultService::makeResult(ResultService::Success,'',$comments);
+        $pageResult['pageData']=$comments;
+        return ResultService::makeResult(ResultService::Success,'',$pageResult);
     }
 }

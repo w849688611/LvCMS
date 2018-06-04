@@ -52,6 +52,7 @@ Route::rule('api/category/add','portal/CategoryBase/add');
 Route::rule('api/category/delete','portal/CategoryBase/delete');
 Route::rule('api/category/update','portal/CategoryBase/update');
 Route::rule('api/category/get','portal/CategoryBase/get');
+Route::rule('api/category/getByPage','portal/CategoryBase/getByPage');
 Route::rule('api/category/getTree','portal/CategoryBase/getTree');
 Route::rule('api/category/getPostOfCategory','portal/CategoryBase/getPostOfCategory');
 /**
@@ -62,12 +63,15 @@ Route::rule('api/post/delete','portal/PostBase/delete');
 Route::rule('api/post/update','portal/PostBase/update');
 Route::rule('api/post/get','portal/PostBase/get');
 Route::rule('api/post/getByPage','portal/PostBase/getByPage');
+Route::rule('api/post/search','portal/PostBase/search');
 Route::rule('api/post/getCommentOfPost','portal/PostBase/getCommentOfPost');
 /**
  * 管理评论相关接口
  */
 Route::rule('api/comment/get','portal/CommentBase/get');
+Route::rule('api/comment/update','portal/CommentBase/update');
 Route::rule('api/comment/delete','portal/CommentBase/delete');
+Route::rule('api/comment/search','portal/CommentBase/search');
 /**
  * 单页相关接口
  */

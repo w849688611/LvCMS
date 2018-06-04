@@ -9,6 +9,7 @@
 namespace app\admin\controller;
 
 
+use app\admin\model\AuthModel;
 use app\admin\model\RoleAuthModel;
 use app\admin\model\RoleModel;
 use app\admin\validate\role\RoleAddValidate;
@@ -104,12 +105,12 @@ class RoleBase extends Controller
         if($request->has('id')){
             (new IDPositive())->goCheck();
             $id=$request->param('id');
-            $role=RoleModel::where('id','=',$id)->find();
+            $role=RoleModel::where('id','=',$id)->with('auth')->find();
             if($role){
                 return ResultService::makeResult(ResultService::Success,'',$role->toArray());
             }
             else{
-                return ResultService::failure('管理员不存在');
+                return ResultService::failure('角色不存在');
             }
         }
         else{
@@ -129,15 +130,16 @@ class RoleBase extends Controller
         if(!TokenService::validToken($request->header('token'))){
             throw new TokenException();
         }
+        $pageResult=[];
+        $role=RoleModel::select()->toArray();
+        $pageResult['total']=count($role);
         if($request->has('page')){
-            $page=$request->param('page');
-            $pageSize=$request->has('pageSize')?$request->param('pageSize'):config('base.defaultPageSize');
+            $pageResult['page']=$page=$request->param('page');
+            $pageResult['pageSize']=$pageSize=$request->has('pageSize')?$request->param('pageSize'):config('base.defaultPageSize');
             $role=RoleModel::page($page,$pageSize)->select();
         }
-        else{
-            $role=RoleModel::select();
-        }
-        return ResultService::makeResult(ResultService::Success,'',$role->toArray());
+        $pageResult['pageData']=$role;
+        return ResultService::makeResult(ResultService::Success,'',$pageResult);
     }
 
     /**绑定权限
@@ -206,7 +208,7 @@ class RoleBase extends Controller
         else if($request->has('uris')){
             $uris=$request->param('uris');
             $count=Db::name('role_auth')
-                ->alias('role_auth')//做一下别名处理，如果不做则在下一步链接时候会报找不到列的错误，因为链接需要写完整表名，而用name是去前缀的表明，如果用table则无需做别名处理
+                ->alias('role_auth')//做一下别名处理，如果不做则在下一步链接时候会报找不到列的错误，因为链接需要写完整表名，而用name是去前缀的表名，如果用table则无需做别名处理
                 ->join('auth','role_auth.auth_id=auth.id')
                 ->where('role_id','=',$roleId)
                 ->where('uris','=',$uris)

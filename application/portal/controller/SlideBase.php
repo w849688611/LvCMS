@@ -124,15 +124,16 @@ class SlideBase extends Controller
         if(!TokenService::validAdminToken($request->header('token'))){
             throw new TokenException();
         }
+        $pageResult=[];
+        $slides=SlideModel::select()->toArray();
+        $pageResult['total']=count($slides);
         if($request->has('page')){
-            $page=$request->param('page');
-            $pageSize=$request->has('pageSize')?$request->param('pageSize'):config('base.defaultPageSize');
+            $pageResult['page']=$page=$request->param('page');
+            $pageResult['pageSize']=$pageSize=$request->has('pageSize')?$request->param('pageSize'):config('base.defaultPageSize');
             $slides=SlideModel::page($page,$pageSize)->select();
         }
-        else{
-            $slides=SlideModel::select();
-        }
-        return ResultService::success('',$slides->toArray());
+        $pageResult['pageData']=$slides;
+        return ResultService::success('',$pageResult);
     }
 
     /**获取幻灯片组下的幻灯片想

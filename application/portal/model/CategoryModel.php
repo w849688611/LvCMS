@@ -80,6 +80,26 @@ class CategoryModel extends Model
         }
         return false;
     }
+
+    /**生成树形表格
+     * @param $categoryTree
+     * @param int $level
+     * @return array
+     */
+    public static function generateCategoryTreeTable($categoryTree,$level=0){
+        $result=array();
+        for($i=0,$len=count($categoryTree);$i<$len;$i++){
+            $categoryTree[$i]['level']=$level;
+            $childrenTree=$categoryTree[$i]['children'];
+            unset($categoryTree[$i]['children']);
+            array_push($result,$categoryTree[$i]);
+            if(count($childrenTree)>0){
+                $children=self::generateCategoryTreeTable($childrenTree,$level+1);
+                $result=array_merge($result,$children);
+            }
+        }
+        return $result;
+    }
     /*************存取器**************/
     public function getMoreAttr($value){
         return json_decode($value,true);

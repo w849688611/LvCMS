@@ -33,6 +33,9 @@ class AuthBase extends Controller
         }
         (new AuthAddValidate())->goCheck();
         $auth=new AuthModel($request->param());
+        if($request->has('more')){
+            $auth->more=json_decode($request->param('more'),true);
+        }
         $auth->allowField(true)->save();
         return ResultService::success('添加资源成功');
     }
@@ -78,10 +81,21 @@ class AuthBase extends Controller
         (new IDPositive())->goCheck();
         $id=$request->param('id');
         $auth=AuthModel::where('id','=',$id)->find();
-        (new AuthAddValidate())->goCheck();
-        $auth->name=$request->param('name');
-        $auth->uris=$request->param('uris');
-        $auth->parent_id=$request->param('parent_id');
+        if($request->has('name')){
+            $auth->name=$request->param('name');
+        }
+        if($request->has('uris')){
+            $auth->uris=$request->param('uris');
+        }
+        if($request->has('parent_id')){
+            $auth->parent_id=$request->param('parent_id');
+            if($auth->parent_id==$auth->id){
+                return ResultService::failure('父级权限不能为自身');
+            }
+        }
+        if($request->has('more')){
+            $auth->more=json_decode($request->param('more'),true);
+        }
         $auth->save();
         return ResultService::success('更新角色成功');
     }
@@ -103,7 +117,16 @@ class AuthBase extends Controller
         if($request->has('id')){
             (new IDPositive())->goCheck();
             $id=$request->param('id');
+//            $tag=$request->has('tag')?$request->param('tag'):'checked';//表示权限是否被允许的键名，用于前端生成带复选框的树时使用
+//            $tagSuccessValue=$request->has('tagSuccessValue')?$request->param('tagSuccessValue'):'1';//选中项的值
+//            $tagFailureValue=$request->has('tagFailureValue')?$request->param('tagSuccessValue'):'0';
             $auth=AuthModel::where('id','=',$id)->find();
+            if($auth->parent_id==0){
+                $auth->parent_name='一级权限资源';
+            }
+            else{
+                $auth->parent_name=AuthModel::where('id','=',$auth->parent_id)->find()->name;
+            }
             if($auth){
                 return ResultService::makeResult(ResultService::Success,'',$auth->toArray());
             }
@@ -129,15 +152,16 @@ class AuthBase extends Controller
         if(!TokenService::validAdminToken($request->header('token'))){
             throw new TokenException();
         }
+        $pageResult=[];
+        $auth=AuthModel::select()->toArray();
+        $pageResult['total']=count($auth);
         if($request->has('page')){
-            $page=$request->param('page');
-            $pageSize=$request->has('pageSize')?$request->param('pageSize'):config('base.defaultPageSize');
+            $pageResult['page']=$page=$request->param('page');
+            $pageResult['pageSize']=$pageSize=$request->has('pageSize')?$request->param('pageSize'):config('base.defaultPageSize');
             $auth=AuthModel::page($page,$pageSize)->select();
         }
-        else{
-            $auth=AuthModel::select();
-        }
-        return ResultService::makeResult(ResultService::Success,'',$auth->toArray());
+        $pageResult['pageData']=$auth;
+        return ResultService::makeResult(ResultService::Success,'',$pageResult);
     }
 
     /**获取树形权限（管理配置用）有roleId则返回该role的权限树（带选择标识），否则返回一个普通权限树（标识为不选）
@@ -179,7 +203,7 @@ class AuthBase extends Controller
         if(!TokenService::validAdminToken($request->header('token'))){
             throw new TokenException();
         }
-        $roleId=TokenService::getCurrentVars($request->header('token'),'role');
+        $roleId=TokenService::getCurrentVars($request->header('token'),'role_id');
         $auths=RoleAuthModel::where('role_id','=',$roleId)->field('auth_id')->select()->toArray();
         $roleAuth=array();
         foreach($auths as $item){

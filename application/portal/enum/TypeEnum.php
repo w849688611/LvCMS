@@ -15,4 +15,5 @@ class TypeEnum
     const SINGLE='2';
     const POST='3';
     const LINK='4';
+    const COMMENT='5';
 }

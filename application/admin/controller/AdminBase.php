@@ -87,13 +87,13 @@ class AdminBase extends Controller
         $id=$request->param('id');
         $admin=AdminModel::where('id','=',$id)->find();
         if($admin){
-            if($request->has('password')){
+            if($request->has('password')&&$request->param('password')!=''&&strlen($request->param('password'))>0){
                 (new AdminPasswordValidate())->goCheck();
                 $admin->password=$request->param('password');
             }
-            if($request->has('role')){
+            if($request->has('role_id')){
                 (new AdminRoleValidate())->goCheck();
-                $admin->role=$request->param('role');
+                $admin->role_id=$request->param('role_id');
             }
             if($request->has('status')){
                 (new AdminStatusValidate())->goCheck();
@@ -102,6 +102,12 @@ class AdminBase extends Controller
                 if($status==AdminStatusEnum::NORMAL){
                     $admin->error_count=0;
                 }
+            }
+            if($request->has('super')){
+                $admin->super=$request->param('super');
+            }
+            if($request->has('more')){
+                $admin->more=json_decode($request->param('more'),true);
             }
             $admin->save();
             return ResultService::success('更新管理员成功');
@@ -127,7 +133,7 @@ class AdminBase extends Controller
         if($request->has('id')){
             (new IDPositive())->goCheck();
             $id=$request->param('id');
-            $admin=AdminModel::where('id','=',$id)->find();
+            $admin=AdminModel::where('id','=',$id)->with('role')->find();
             if($admin){
                 return ResultService::makeResult(ResultService::Success,'',$admin->toArray());
             }
@@ -136,7 +142,7 @@ class AdminBase extends Controller
             }
         }
         else{
-            $admins=AdminModel::select();
+            $admins=AdminModel::with('role')->select();
             return ResultService::makeResult(ResultService::Success,'',$admins->toArray());
         }
     }
@@ -153,15 +159,16 @@ class AdminBase extends Controller
         if(!TokenService::validAdminToken($request->header('token'))){
             throw new TokenException();
         }
+        $pageResult=[];
+        $admin=AdminModel::with('role')->select()->toArray();
+        $pageResult['total']=count($admin);
         if($request->has('page')){
-            $page=$request->param('page');
-            $pageSize=$request->has('pageSize')?$request->param('pageSize'):config('base.defaultPageSize');
-            $admin=AdminModel::page($page,$pageSize)->select();
+            $pageResult['page']=$page=$request->param('page');
+            $pageResult['pageSize']=$pageSize=$request->has('pageSize')?$request->param('pageSize'):config('base.defaultPageSize');
+            $admin=AdminModel::with('role')->page($page,$pageSize)->select();
         }
-        else{
-            $admin=AdminModel::select();
-        }
-        return ResultService::makeResult(ResultService::Success,'',$admin->toArray());
+        $pageResult['pageData']=$admin;
+        return ResultService::makeResult(ResultService::Success,'',$pageResult);
     }
 
     /**管理员登录
@@ -180,7 +187,7 @@ class AdminBase extends Controller
         $payload=[
             'id'=>$admin->id,
             'account'=>$admin->account,
-            'role'=>$admin->role,
+            'role_id'=>$admin->role_id,
             'super'=>$admin->super,
             'status'=>$admin->status,
             'errorCount'=>$admin->error_count,

@@ -25,7 +25,7 @@ class AdminModel extends Model
         return json_encode($value);
     }
     public function role(){
-        return $this->belongsTo('RoleModel','role');
+        return $this->belongsTo('RoleModel','role_id');
     }
     public function checkPassword($password){
         if(md5(config('security.salt').$password)==$this->password){
