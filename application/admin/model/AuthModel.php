@@ -31,7 +31,7 @@ class AuthModel extends Model
      */
     public static function generateAuthTree($roleAuth,$tag='checked',$tagSuccessValue='1',$tagFailureValue='0'){
         if(is_array($roleAuth)){
-            $parentAuth=self::where('parent_id','=','0')->select()->toArray();
+            $parentAuth=self::where('parent_id','=','0')->order('list_order','desc')->select()->toArray();
             for($i=0,$len=count($parentAuth);$i<$len;$i++){
                 if(self::isAuthInRoleAuth($roleAuth,$parentAuth[$i])){
                     $parentAuth[$i][$tag]=$tagSuccessValue;
@@ -46,7 +46,7 @@ class AuthModel extends Model
         return array();
     }
     private static function generateAuthChildren($roleAuth,$tag='checked',$tagSuccessValue='1',$tagFailureValue='0',$parentId){
-        $parentAuth=self::where('parent_id','=',$parentId)->select()->toArray();
+        $parentAuth=self::where('parent_id','=',$parentId)->order('list_order','desc')->select()->toArray();
         if(count($parentAuth)==0){
             return array();
         }
@@ -80,7 +80,7 @@ class AuthModel extends Model
      * @throws \think\exception\DbException
      */
     public static function getAuthTreeOfRole($roleAuth){
-        $auths=self::where('id','IN',$roleAuth)->select()->toArray();
+        $auths=self::where('id','IN',$roleAuth)->order('list_order','desc')->select()->toArray();
         $tree=array();
         for($i=0,$len=count($auths);$i<$len;$i++){
             if($auths[$i]['parent_id']==0){

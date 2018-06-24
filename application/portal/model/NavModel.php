@@ -32,6 +32,7 @@ class NavModel extends Model
     public static function generateItemTree($id=0){
         $items=NavItemModel::where('nav_id','=',$id)
             ->where('parent_id','=','0')
+            ->order('list_order','desc')
             ->select()->toArray();
         for($i=0,$len=count($items);$i<$len;$i++){
             $items[$i]['item']=NavItemModel::getItemByType($items[$i]['type'],$items[$i]['item_id']);
@@ -48,6 +49,7 @@ class NavModel extends Model
     public static function generateItemChildren($id,$parentId){
         $parentItems=NavItemModel::where('nav_id','=',$id)
             ->where('parent_id','=',$parentId)
+            ->order('list_order','desc')
             ->select()->toArray();
         if(!count($parentItems)==0){
             for($i=0,$len=count($parentItems);$i<$len;$i++){

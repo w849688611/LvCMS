@@ -98,7 +98,7 @@ Route::rule('api/nav/delete','portal/NavBase/delete');
 Route::rule('api/nav/update','portal/NavBase/update');
 Route::rule('api/nav/get','portal/NavBase/get');
 Route::rule('api/nav/getByPage','portal/NavBase/getByPage');
-Route::rule('api/nav/geItemOfNav','portal/NavBase/geItemOfNav');
+Route::rule('api/nav/getItemOfNav','portal/NavBase/getItemOfNav');
 Route::rule('api/nav/item/add','portal/NavItemBase/add');
 Route::rule('api/nav/item/delete','portal/NavItemBase/delete');
 Route::rule('api/nav/item/update','portal/NavItemBase/update');
@@ -111,7 +111,7 @@ Route::rule('api/slide/delete','portal/SlideBase/delete');
 Route::rule('api/slide/update','portal/SlideBase/update');
 Route::rule('api/slide/get','portal/SlideBase/get');
 Route::rule('api/slide/getByPage','portal/SlideBase/getByPage');
-Route::rule('api/slide/geItemOfNav','portal/SlideBase/geItemOfSlide');
+Route::rule('api/slide/getItemOfSlide','portal/SlideBase/getItemOfSlide');
 Route::rule('api/slide/item/add','portal/SlideItemBase/add');
 Route::rule('api/slide/item/delete','portal/SlideItemBase/delete');
 Route::rule('api/slide/item/update','portal/SlideItemBase/update');
@@ -125,6 +125,15 @@ Route::rule('api/user/delete','user/UserBase/delete');
 Route::rule('api/user/update','user/UserBase/update');
 Route::rule('api/user/get','user/UserBase/get');
 Route::rule('api/user/getByPage','user/UserBase/getByPage');
+/**
+ * 用户组相关接口
+ */
+Route::rule('api/userGroup/add','user/UserGroupBase/add');
+Route::rule('api/userGroup/delete','user/UserGroupBase/delete');
+Route::rule('api/userGroup/update','user/UserGroupBase/update');
+Route::rule('api/userGroup/get','user/UserGroupBase/get');
+Route::rule('api/userGroup/getByPage','user/UserGroupBase/getByPage');
+Route::rule('api/userGroup/getUserOfGroup','user/UserGroupBase/getUserOfGroup');
 /**
  * 文件相关接口
  */

@@ -96,6 +96,9 @@ class AuthBase extends Controller
         if($request->has('more')){
             $auth->more=json_decode($request->param('more'),true);
         }
+        if($request->has('list_order')){
+            $auth->list_order=is_numeric($request->param('list_order'))?$request->param('list_order'):0;
+        }
         $auth->save();
         return ResultService::success('更新角色成功');
     }

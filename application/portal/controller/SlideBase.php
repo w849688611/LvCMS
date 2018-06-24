@@ -33,7 +33,7 @@ class SlideBase extends Controller
         (new SlideAddValidate())->goCheck();
         $slide=new SlideModel($request->param());
         if($request->has('more')){
-            $slide->more=$request->param('more','','htmlspecialchars_decode,json_decode');
+            $slide->more=json_decode(htmlspecialchars_decode($request->param('more')),true);
         }
         $slide->allowField(true)->save();
         return ResultService::success('添加幻灯片组成功');
@@ -77,10 +77,13 @@ class SlideBase extends Controller
             if($request->has('name')){
                 $slide->name=$request->param('name');
             }
-            if($request->has('more')){
-                $slide->more=$request->param('more','','htmlspecialchars_decode,json_decode');
+            if($request->has('excerpt')){
+                $slide->excerpt=$request->param('excerpt');
             }
-            $slide->save();
+            if($request->has('more')){
+                $slide->more=json_decode(htmlspecialchars_decode($request->param('more')),true);
+            }
+            $slide->allowField(true)->save();
             return ResultService::success('更新幻灯片组成功');
         }
         else{

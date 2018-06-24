@@ -39,7 +39,7 @@ class UserBase extends Controller
         (new UserAddValidate())->goCheck();
         $user=new UserModel($request->param());
         $user->password=$request->param('password');
-        $user->more=$request->param('more','','htmlspecialchars_decode,json_decode');
+        $user->more=json_decode(htmlspecialchars_decode($request->param('more')),true);
         $user->allowField(true)->save();
         return ResultService::success('添加用户成功');
     }
@@ -94,7 +94,10 @@ class UserBase extends Controller
                 }
             }
             if($request->param('more')){
-                $user->more=$request->param('more','','htmlspecialchars_decode,json_decode');
+                $user->more=json_decode(htmlspecialchars_decode($request->param('more')),true);
+            }
+            if($request->has('user_group_id')){
+                $user->user_group_id=$request->param('user_group_id');
             }
             $user->save();
             return ResultService::success('更新用户成功');
@@ -116,7 +119,7 @@ class UserBase extends Controller
         if($request->has('id')){
             (new IDPositive())->goCheck();
             $id=$request->param('id');
-            $user=UserModel::where('id','=',$id)->find()->hidden();
+            $user=UserModel::where('id','=',$id)->with('userGroup')->find()->hidden();
             if($user){
                 return ResultService::makeResult(ResultService::Success,'',$user->toArray());
             }
@@ -140,12 +143,12 @@ class UserBase extends Controller
             throw new TokenException();
         }
         $pageResult=[];
-        $user=UserModel::select()->toArray();
+        $user=UserModel::with('userGroup')->select()->toArray();
         $pageResult['total']=count($user);
         if($request->has('page')){
             $pageResult['page']=$page=$request->param('page');
             $pageResult['pageSize']=$pageSize=$request->has('pageSize')?$request->param('pageSize'):config('base.defaultPageSize');
-            $user=UserModel::page($page,$pageSize)->select()->toArray();
+            $user=UserModel::page($page,$pageSize)->with('userGroup')->select()->toArray();
         }
         $pageResult['pageData']=$user;
         return ResultService::makeResult(ResultService::Success,'',$pageResult);

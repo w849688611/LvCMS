@@ -31,7 +31,7 @@ class NavItemAddValidate extends BaseValidate
         'item_id.positiveInt'=>'导航内容id必须为有效正整数',
     ];
     public function typeValid($value){
-        if($value==TypeEnum::CATEGORY||$value==TypeEnum::SINGLE||$value==TypeEnum::POST){
+        if($value==TypeEnum::CATEGORY||$value==TypeEnum::SINGLE||$value==TypeEnum::POST||$value==TypeEnum::LINK){
             return true;
         }
         return false;

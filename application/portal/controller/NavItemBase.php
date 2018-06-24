@@ -32,7 +32,7 @@ class NavItemBase extends Controller
         (new NavItemAddValidate())->goCheck();
         $navItem=new NavItemModel($request->param());
         if($request->has('more')){
-            $navItem->more=$request->param('more','','htmlspecialchars_decode,json_decode');
+            $navItem->more=json_decode(htmlspecialchars_decode($request->param('more')),true);
         }
         $navItem->allowField(true)->save();
         return ResultService::success('添加导航项成功');
@@ -76,6 +76,9 @@ class NavItemBase extends Controller
                 $navItem->nav_id=$request->param('nav_id');
             }
             if($request->has('parent_id')){
+                if($request->param('parent_id')==$navItem->id){
+                    return ResultService::failure('父级导航不能为自身');
+                }
                 $navItem->parent_id=$request->param('parent_id');
             }
             if($request->has('item_id')){
@@ -88,7 +91,10 @@ class NavItemBase extends Controller
                 $navItem->type=$request->param('type');
             }
             if($request->has('more')){
-                $navItem->more=$request->param('more','','htmlspecialchars_decode,json_decode');
+                $navItem->more=json_decode(htmlspecialchars_decode($request->param('more')),true);
+            }
+            if($request->has('link')){
+                $navItem->link=$request->param('link');
             }
             $navItem->save();
             return ResultService::success('更新导航项成功');
@@ -111,6 +117,7 @@ class NavItemBase extends Controller
         $id=$request->param('id');
         $navItem=NavItemModel::where('id','=',$id)->with('nav')->find();
         if($navItem){
+            $navItem->parent=NavItemModel::where('id','=',$navItem->parent_id)->find();
             $navItem->item=$navItem->item;
             return ResultService::success('',$navItem->toArray());
         }

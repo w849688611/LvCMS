@@ -31,4 +31,7 @@ class UserModel extends Model
         }
         return false;
     }
+    public function userGroup(){
+        return $this->belongsTo('UserGroupModel','user_group_id');
+    }
 }

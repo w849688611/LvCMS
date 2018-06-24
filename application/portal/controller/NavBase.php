@@ -33,7 +33,7 @@ class NavBase extends Controller
         (new NavAddValidate())->goCheck();
         $nav=new NavModel($request->param());
         if($request->has('more')){
-            $nav->more=$request->param('more','','htmlspecialchars_decode,json_decode');
+            $nav->more=json_decode(htmlspecialchars_decode($request->param('more')),true);
         }
         $nav->allowField(true)->save();
         return ResultService::success('添加导航组成功');
@@ -81,9 +81,9 @@ class NavBase extends Controller
                 $nav->excerpt=$request->param('excerpt');
             }
             if($request->has('more')){
-                $nav->more=$request->param('more','','htmlspecialchars_decode,json_decode');
+                $nav->more=json_decode(htmlspecialchars_decode($request->param('more')),true);
             }
-            $nav->save();
+            $nav->allowField(true)->save();
             return ResultService::success('更新导航组成功');
         }
         else{
@@ -144,7 +144,7 @@ class NavBase extends Controller
      * @return \think\response\Json
      * @throws TokenException
      */
-    public function geItemOfNav(Request $request){
+    public function getItemOfNav(Request $request){
         if(!TokenService::validAdminToken($request->header('token'))){
             throw new TokenException();
         }

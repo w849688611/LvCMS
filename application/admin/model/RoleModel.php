@@ -20,7 +20,7 @@ class RoleModel extends Model
      * @return \think\model\relation\HasMany
      */
     public function admin(){
-        return $this->hasMany('AdminModel','role');
+        return $this->hasMany('AdminModel','role_id');
     }
     /**与权限多对多关联
      * @return \think\model\relation\BelongsToMany

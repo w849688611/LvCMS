@@ -32,7 +32,7 @@ class SlideItemBase extends Controller
         (new SlideItemAddValidate())->goCheck();
         $slideItem=new SlideItemModel($request->param());
         if($request->has('more')){
-            $slideItem->more=$request->param('more','','htmlspecialchars_decode,json_decode');
+            $slideItem->more=json_decode(htmlspecialchars_decode($request->param('more')),true);
         }
         $slideItem->allowField(true)->save();
         return ResultService::success('添加幻灯片项成功');
@@ -72,8 +72,11 @@ class SlideItemBase extends Controller
         $id=$request->param('id');
         $slideItem=SlideItemModel::where('id','=',$id)->find();
         if($slideItem){
+            if($request->has('name')){
+                $slideItem->name=$request->param('name');
+            }
             if($request->has('slide_id')){
-                $slideItem->nav_id=$request->param('slide_id');
+                $slideItem->slide_id=$request->param('slide_id');
             }
             if($request->has('item_id')){
                 $slideItem->item_id=$request->param('item_id');
@@ -91,9 +94,9 @@ class SlideItemBase extends Controller
                 $slideItem->list_order=$request->param('list_order');
             }
             if($request->has('more')){
-                $slideItem->more=$request->param('more','','htmlspecialchars_decode,json_decode');
+                $slideItem->more=json_decode(htmlspecialchars_decode($request->param('more')),true);
             }
-            $slideItem->save();
+            $slideItem->allowField(true)->save();
             return ResultService::success('更新幻灯片项成功');
         }
         else{
