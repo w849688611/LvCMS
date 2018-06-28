@@ -32,5 +32,18 @@ So much for unconsolidated sediments. Consolidated (or cemented) sediments, too,
         foreach ($words as $w=>$n)
             echo "$w $n <br>\n";
     }
+    public function test(){
+//        echo json_encode([]);
+//        //echo json_decode('{}',true);
+//        $temp=json_decode('{}',true);
+//
+//        echo json_encode(json_decode('[]'));
+        $category=json_decode(htmlspecialchars_decode('[]'),true);
+        $categoryIds=array();
+        for($i=0,$len=count($category);$i<$len;$i++){
+            $categoryIds[]=$category[$i]['id'];
+        }
+       echo count($categoryIds);
+    }
 
 }

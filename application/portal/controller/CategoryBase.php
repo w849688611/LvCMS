@@ -33,7 +33,7 @@ class CategoryBase extends Controller
         (new CategoryAddValidate())->goCheck();
         $category=new CategoryModel($request->param());
         if($request->has('content')){
-            $category->content=$request->param('content','','htmlspecialchars_decode');
+            $category->content=$request->param('content');
         }
         if($request->has('more')){
             $category->more=json_decode(htmlspecialchars_decode($request->param('more')),true);
@@ -87,7 +87,7 @@ class CategoryBase extends Controller
                 $category->excerpt=$request->param('excerpt');
             }
             if($request->has('content')){
-                $category->content=$request->param('content','','htmlspecialchars_decode');
+                $category->content=$request->param('content');
             }
             if($request->has('thumbnail')){
                 $category->thumbnail=$request->param('thumbnail');
@@ -103,6 +103,9 @@ class CategoryBase extends Controller
             }
             if($request->has('template_id')){
                 $category->template_id=$request->param('template_id');
+            }
+            if($request->has('list_order')){
+                $category->list_order=$request->param('list_order');
             }
             $category->save();
             return ResultService::success('更新栏目成功');

@@ -35,10 +35,10 @@ class PostBase extends Controller
         $post=new PostModel($request->param());
         $post->user_id=TokenService::getCurrentVars($request->header('token'),'id');
         if($request->has('content')){
-            $post->content=$request->param('content','','htmlspecialchars_decode');
+            $post->content=$request->param('content');
         }
         if($request->has('more')){
-            $post->more=json_decode(htmlspecialchars_decode($request->param('more'),true));
+            $post->more=json_decode(htmlspecialchars_decode($request->param('more')),true);
         }
         $post->allowField(true)->save();
         if($request->has('category')){
@@ -47,7 +47,9 @@ class PostBase extends Controller
             for($i=0,$len=count($category);$i<$len;$i++){
                 $categoryIds[]=$category[$i]['id'];
             }
-            $post->category()->save($categoryIds);
+            if(count($categoryIds)>0){
+                $post->category()->save($categoryIds);
+            }
         }
         return ResultService::success('添加内容成功');
     }
@@ -128,7 +130,7 @@ class PostBase extends Controller
                 $post->source=$request->param('source');
             }
             if($request->has('content')){
-                $post->content=$request->param('content','','htmlspecialchars_decode');
+                $post->content=$request->param('content');
             }
             if($request->has('more')){
                 $post->more=json_decode(htmlspecialchars_decode($request->param('more')),true);
@@ -182,13 +184,13 @@ class PostBase extends Controller
             throw new TokenException();
         }
         $pageResult=[];
-        $posts=PostModel::with('category,template')->select();
+        $posts=PostModel::with('category,template')->order('create_time','desc')->select();
         $posts->hidden(['create_time','update_time','category.create_time','category.update_time','category.pivot','template.create_time','template.update_time']);
         $pageResult['total']=count($posts);
         if($request->has('page')){
             $pageResult['page']=$page=$request->param('page');
             $pageResult['pageSize']=$pageSize=$request->has('pageSize')?$request->param('pageSize'):config('base.defaultPageSize');
-            $posts=PostModel::page($page,$pageSize)->with('category')->select();
+            $posts=PostModel::page($page,$pageSize)->with('category')->order('create_time','desc')->select();
             $posts->hidden(['create_time','update_time','category.create_time','category.update_time','category.pivot']);
         }
         $pageResult['pageData']=$posts;

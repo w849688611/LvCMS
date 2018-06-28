@@ -25,7 +25,7 @@ class CategoryModel extends Model
      */
     public static function generateCategoryTree($postCategory,$tag='checked',$tagSuccessValue='1',$tagFailureValue='0'){
         if(is_array($postCategory)){
-            $parentCategory=self::where('parent_id','=','0')->select()->hidden(['create_time','update_time'])->toArray();
+            $parentCategory=self::where('parent_id','=','0')->order('list_order','desc')->select()->hidden(['create_time','update_time'])->toArray();
             for($i=0,$len=count($parentCategory);$i<$len;$i++){
                 if(self::isCategoryInPostCategory($postCategory,$parentCategory[$i])){
                     $parentCategory[$i][$tag]=$tagSuccessValue;
@@ -49,7 +49,7 @@ class CategoryModel extends Model
      * @return array
      */
     public static function generateCategoryChildren($postCategory,$tag='checked',$tagSuccessValue='1',$tagFailureValue='0',$parentId){
-        $parentCategory=self::where('parent_id','=',$parentId)->select()->hidden(['create_time','update_time'])->toArray();
+        $parentCategory=self::where('parent_id','=',$parentId)->order('list_order','desc')->select()->hidden(['create_time','update_time'])->toArray();
         if(count($parentCategory)==0){
             return array();
         }
